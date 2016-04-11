@@ -15,3 +15,20 @@ C:\Users\datra\Documents\Visual Studio 2015\Projects\Diploma\Diploma\bin\Debug\E
 C:\Users\datra\Documents\Visual Studio 2015\Projects\Diploma\Diploma\bin\Debug\DAL.pdb
 C:\Users\datra\Documents\Visual Studio 2015\Projects\Diploma\Diploma\bin\Debug\EntityFramework.xml
 C:\Users\datra\Documents\Visual Studio 2015\Projects\Diploma\Diploma\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\datra\Documents\GitHub\Diploma\Diploma\bin\Debug\Diploma.exe.config
+C:\Users\datra\Documents\GitHub\Diploma\Diploma\obj\Debug\Diploma.exe
+C:\Users\datra\Documents\GitHub\Diploma\Diploma\obj\Debug\Diploma.pdb
+C:\Users\datra\Documents\GitHub\Diploma\Diploma\bin\Debug\Diploma.exe
+C:\Users\datra\Documents\GitHub\Diploma\Diploma\bin\Debug\Diploma.pdb
+C:\Users\datra\Documents\GitHub\Diploma\Diploma\bin\Debug\DAL.dll
+C:\Users\datra\Documents\GitHub\Diploma\Diploma\bin\Debug\EntityFramework.dll
+C:\Users\datra\Documents\GitHub\Diploma\Diploma\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\datra\Documents\GitHub\Diploma\Diploma\bin\Debug\ObjectListView.dll
+C:\Users\datra\Documents\GitHub\Diploma\Diploma\bin\Debug\DAL.pdb
+C:\Users\datra\Documents\GitHub\Diploma\Diploma\bin\Debug\EntityFramework.xml
+C:\Users\datra\Documents\GitHub\Diploma\Diploma\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\datra\Documents\GitHub\Diploma\Diploma\bin\Debug\ObjectListView.xml
+C:\Users\datra\Documents\GitHub\Diploma\Diploma\obj\Debug\Diploma.csprojResolveAssemblyReference.cache
+C:\Users\datra\Documents\GitHub\Diploma\Diploma\obj\Debug\Diploma.Form1.resources
+C:\Users\datra\Documents\GitHub\Diploma\Diploma\obj\Debug\Diploma.Properties.Resources.resources
+C:\Users\datra\Documents\GitHub\Diploma\Diploma\obj\Debug\Diploma.csproj.GenerateResource.Cache

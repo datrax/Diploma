@@ -19,16 +19,62 @@ namespace Diploma
     public partial class Form1 : Form
     {
         private IUnitOfWork unitOfWork = null;
+        private void tabControl1_DrawItem(Object sender, System.Windows.Forms.DrawItemEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            Brush _textBrush;
 
+            // Get the item from the collection.
+            TabPage _tabPage = tabControl1.TabPages[e.Index];
+
+            // Get the real bounds for the tab rectangle.
+            Rectangle _tabBounds = tabControl1.GetTabRect(e.Index);
+
+            if (e.State == DrawItemState.Selected)
+            {
+
+                // Draw a different background color, and don't paint a focus rectangle.
+                _textBrush = new SolidBrush(Color.White);
+                g.FillRectangle(new SolidBrush(Color.FromArgb(255, 51, 153, 255)), e.Bounds);
+            }
+            else
+            {
+                _textBrush = new System.Drawing.SolidBrush(e.ForeColor);
+                e.DrawBackground();
+            }
+
+            // Use our own font.
+            Font _tabFont = new Font("Arial", 20.5F, GraphicsUnit.Pixel);
+
+            // Draw string. Center the text.
+            StringFormat _stringFlags = new StringFormat();
+            _stringFlags.Alignment = StringAlignment.Center;
+            _stringFlags.LineAlignment = StringAlignment.Center;
+            g.DrawString(_tabPage.Text, _tabFont, _textBrush, _tabBounds, new StringFormat(_stringFlags));
+        }
         public Form1()
         {
             InitializeComponent();
+
+            panel1.SendToBack();
+            tabControl1.TabPages[0].Text=("Объекты");
+            tabControl1.TabPages[1].Text = ("Участки");
+            tabControl1.TabPages[2].Text = ("Скважины");
+            tabControl1.TabPages[3].Text = ("Прочее");
+            tabControl1.DrawItem += tabControl1_DrawItem;
+            this.dataGridView2.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            foreach (DataGridViewRow row in dataGridView2.Rows)
+            {
+                row.Height = 32;
+                row.DefaultCellStyle.Font = new Font("Arial", 20.5F, GraphicsUnit.Pixel);
+            }
             button2.Enabled = true;
             unitOfWork = new UnitOfWork<EFModel>();
+            dataGridView3.MouseDoubleClick += clicks;
             listView1.View = View.Tile;
             listView1.TileSize = new Size(200, 45);
-            dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-
+            dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.Sunken;
+           // dataGridView1.
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 row.Height = 30;
@@ -41,7 +87,13 @@ namespace Diploma
             {new ColumnHeader(), new ColumnHeader(), new ColumnHeader()});
 
             // Create items and add them to myListView.
-
+           var myImageList = new ImageList();
+            using (Icon myIcon = new Icon("Word.ico"))
+            {
+                myImageList.Images.Add(myIcon);
+            }
+            myImageList.ImageSize = new Size(52, 52);
+            listView1.LargeImageList = myImageList;
             ListViewItem item0 = new ListViewItem(new string[]
             {
                 "Programming Windows",
@@ -54,32 +106,16 @@ namespace Diploma
                 "Petzold, Charles",
                 "2000"
             }, 0);
-            ListViewItem item2 = new ListViewItem(new string[]
-            {
-                "Programming Windows with C#",
-                "Petzold, Charles",
-                "2001"
-            }, 0);
-            ListViewItem item3 = new ListViewItem(new string[]
-            {
-                "Coding Techniques for Microsoft Visual Basic .NET",
-                "Connell, John",
-                "2001"
-            }, 0);
-            ListViewItem item4 = new ListViewItem(new string[]
-            {
-                "C# for Java Developers",
-                "Jones, Allen & Freeman, Adam",
-                "2002"
-            }, 0);
-            ListViewItem item5 = new ListViewItem(new string[]
-            {
-                "Microsoft .NET XML Web Services Step by Step",
-                "Jones, Allen & Freeman, Adam",
-                "2002"
-            }, 0);
+
             listView1.Items.AddRange(
-                new ListViewItem[] {item0, item1, item2, item3, item4, item5});
+                new ListViewItem[] { item0, item1 });
+        }
+
+        private void clicks(object sender, MouseEventArgs e)
+        {
+            var t = (sender as DataGridView).CurrentCell.RowIndex;
+       //     MessageBox.Show((sender as DataGridView).Rows[t].Cells[1].Value.ToString());
+       panel1.BringToFront();
         }
 
         private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -128,20 +164,49 @@ namespace Diploma
         {
             //button2.Enabled = false;
             dataGridView1.DataSource =
-                unitOfWork.GetRepository<objects>().GetAll().ToList().Select(a => new {Имя = a.name}).ToList();
+                unitOfWork.GetRepository<objects>().GetAll().ToList().Select(a => new { Имя = a.name }).ToList();
             dataGridView1.Refresh();
+            dataGridView3.DataSource =
+              unitOfWork.GetRepository<sectors>().GetAll().ToList().Select(a => new { Имя = a.name,Объект=a.objects.name }).ToList();
+         //   dataGridView3.Columns[1].Visible = false;
+       /*     dataGridView3.Columns.Add("Name", "Имя");
+            dataGridView3.Columns.Add("obj", "Объект");
+            dataGridView1_DataBindingComplete(dataGridView3, null);
+           var t = unitOfWork.GetRepository<sectors>().GetAll().ToList();
+            foreach (var a in t)
+            {
+                dataGridView3.Rows.Add(a.name,a.objects.name);
+            }*/
+            dataGridView3.Refresh();
+            dataGridView4.DataSource =
+          unitOfWork.GetRepository<wells>().GetAll().ToList().Select(a => new { Имя = a.char_name, Участок = a.sectors.name,Коорд=a.coordX+" "+a.coordY,Глубина =a.depth,Заметка=a.note }).ToList();
+            dataGridView3.Refresh();
         }
 
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
-            for (int i = 0; i < dataGridView1.ColumnCount; i++)
+            var datagrid = sender as DataGridView;
+            for (int i = 0; i < datagrid.ColumnCount; i++)
             {
-                this.dataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                datagrid.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                datagrid.Columns[i].SortMode = DataGridViewColumnSortMode.Automatic;
             }
-            foreach (DataGridViewRow row in dataGridView1.Rows)
+            foreach (DataGridViewRow row in datagrid.Rows)
             {
                 row.Height = 40;
             }
+        }
+
+        private void tabControl1_Selected(object sender, TabControlEventArgs e)
+        {
+            panel1.SendToBack();
+            button2_Click(null, null);
+        }
+
+        private void tabControl1_MouseClick(object sender, MouseEventArgs e)
+        {
+            panel1.SendToBack();
+
         }
     }
 }
