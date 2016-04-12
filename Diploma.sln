@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "Cons
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{80BD5E89-BE32-4779-B229-10A79890A129}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extended textbox", "Extended textbox\Extended textbox.csproj", "{00ECFDE8-F369-4FBA-9615-7A25CDF83FC3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{80BD5E89-BE32-4779-B229-10A79890A129}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80BD5E89-BE32-4779-B229-10A79890A129}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80BD5E89-BE32-4779-B229-10A79890A129}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00ECFDE8-F369-4FBA-9615-7A25CDF83FC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00ECFDE8-F369-4FBA-9615-7A25CDF83FC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00ECFDE8-F369-4FBA-9615-7A25CDF83FC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00ECFDE8-F369-4FBA-9615-7A25CDF83FC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

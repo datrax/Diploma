@@ -40,3 +40,5 @@ C:\Users\datra\Documents\GitHub\Diploma\ConsoleApplication1\bin\Debug\Microsoft.
 C:\Users\datra\Documents\GitHub\Diploma\ConsoleApplication1\obj\Debug\ConsoleApplication1.csprojResolveAssemblyReference.cache
 C:\Users\datra\Documents\GitHub\Diploma\ConsoleApplication1\obj\Debug\ConsoleApplication1.exe
 C:\Users\datra\Documents\GitHub\Diploma\ConsoleApplication1\obj\Debug\ConsoleApplication1.pdb
+C:\Users\datra\Documents\GitHub\Diploma\ConsoleApplication1\bin\Debug\Extended textbox.dll
+C:\Users\datra\Documents\GitHub\Diploma\ConsoleApplication1\bin\Debug\Extended textbox.pdb

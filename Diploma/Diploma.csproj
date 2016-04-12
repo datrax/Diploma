@@ -99,6 +99,10 @@
       <Project>{80bd5e89-be32-4779-b229-10a79890a129}</Project>
       <Name>DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Extended textbox\Extended textbox.csproj">
+      <Project>{00ecfde8-f369-4fba-9615-7a25cdf83fc3}</Project>
+      <Name>Extended textbox</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

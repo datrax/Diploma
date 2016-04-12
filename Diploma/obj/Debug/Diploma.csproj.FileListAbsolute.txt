@@ -28,7 +28,9 @@ C:\Users\datra\Documents\GitHub\Diploma\Diploma\bin\Debug\DAL.pdb
 C:\Users\datra\Documents\GitHub\Diploma\Diploma\bin\Debug\EntityFramework.xml
 C:\Users\datra\Documents\GitHub\Diploma\Diploma\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\datra\Documents\GitHub\Diploma\Diploma\bin\Debug\ObjectListView.xml
-C:\Users\datra\Documents\GitHub\Diploma\Diploma\obj\Debug\Diploma.csprojResolveAssemblyReference.cache
 C:\Users\datra\Documents\GitHub\Diploma\Diploma\obj\Debug\Diploma.Form1.resources
 C:\Users\datra\Documents\GitHub\Diploma\Diploma\obj\Debug\Diploma.Properties.Resources.resources
 C:\Users\datra\Documents\GitHub\Diploma\Diploma\obj\Debug\Diploma.csproj.GenerateResource.Cache
+C:\Users\datra\Documents\GitHub\Diploma\Diploma\obj\Debug\Diploma.csprojResolveAssemblyReference.cache
+C:\Users\datra\Documents\GitHub\Diploma\Diploma\bin\Debug\Extended textbox.dll
+C:\Users\datra\Documents\GitHub\Diploma\Diploma\bin\Debug\Extended textbox.pdb
