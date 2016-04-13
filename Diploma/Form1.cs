@@ -51,7 +51,7 @@ namespace Diploma
         {
 
             InitializeComponent();
-            unitOfWork = new UnitOfWork<EFModel>();
+            unitOfWork = new UnitOfWork<ModelContext>();
             panel1.SendToBack();
             tabControl1.TabPages[0].Text = ("Объекты");
             tabControl1.TabPages[1].Text = ("Участки");
@@ -70,27 +70,28 @@ namespace Diploma
 
             // Create items and add them to myListView.
             var myImageList = new ImageList();
-            using (Icon myIcon = new Icon("Word.ico"))
+            using (Icon myIcon = new Icon("Icons/Word.ico"))
             {
                 myImageList.Images.Add(myIcon);
             }
-            myImageList.ImageSize = new Size(52, 52);
+            using (Icon myIcon = new Icon("Icons/Txt.ico"))
+            {
+                myImageList.Images.Add(myIcon);
+            }
+            using (Icon myIcon = new Icon("Icons/Common.ico"))
+            {
+                myImageList.Images.Add(myIcon);
+            }
+            using (Icon myIcon = new Icon("Icons/pdf.ico"))
+            {
+                myImageList.Images.Add(myIcon);
+            }
+            using (Icon myIcon = new Icon("Icons/img.ico"))
+            {
+                myImageList.Images.Add(myIcon);
+            }
+            myImageList.ImageSize = new Size(42, 42);
             listView1.LargeImageList = myImageList;
-            ListViewItem item0 = new ListViewItem(new string[]
-            {
-                "Programming Windows",
-                "Petzold, Charles",
-                "1998"
-            }, 0);
-            ListViewItem item1 = new ListViewItem(new string[]
-            {
-                "Code: The Hidden Language of Computer Hardware and Software",
-                "Petzold, Charles",
-                "2000"
-            }, 0);
-
-            listView1.Items.AddRange(
-                new ListViewItem[] { item0, item1 });
             //////////////////////////////////////////////////////////////////////
             FillObjects();
         }
@@ -98,18 +99,25 @@ namespace Diploma
 
         private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            MessageBox.Show(listView1.SelectedItems[0].Text);
+        /*    var doc = unitOfWork.GetRepository<sectorsd_documents>().GetById((int)listView1.SelectedItems[0].Tag);
+            File.WriteAllBytes(doc.Name, doc.Data);
+            Process.Start(doc.Name);*/
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
 
-            var name = "246.docx";
-            oldHash = Helper.GetFileHash(name);
-            Process.Start(name);
-            if (!running)
-                CheckFile(name);
-
+            /*  var name = "246.docx";
+              oldHash = Helper.GetFileHash(name);
+              Process.Start(name);
+              if (!running)
+                  CheckFile(name);*/
+            for (int i = 0; i < listView1.SelectedItems.Count; i++)
+            {
+                var doc = unitOfWork.GetRepository<sectorsd_documents>().GetById((int)listView1.SelectedItems[i].Tag);
+                File.WriteAllBytes(doc.Name, doc.Data);
+                Process.Start(doc.Name);
+            }
 
         }
 
@@ -138,8 +146,23 @@ namespace Diploma
             running = false;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void SaveEdit_Click(object sender, EventArgs e)
         {
+            var doc = unitOfWork.GetRepository<sectorsd_documents>().GetById((int)listView1.SelectedItems[0].Tag);
+            if (!Helper.CanReadFile(doc.Name))
+            {
+                MessageBox.Show("Please save and close your edited file first!");
+                return;
+            }
+            doc.Data = File.ReadAllBytes(doc.Name);
+            doc.CanEdit = true;
+            button2.Enabled = false;
+            button4.Enabled = false;
+            unitOfWork.GetRepository<sectorsd_documents>().Update(doc);
+            unitOfWork.Save();
+            File.Delete("Edited/" + doc.Name);
+            MessageBox.Show("Saved");
+            listView1_ItemSelectionChanged(listView1, null);
         }
 
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -169,6 +192,7 @@ namespace Diploma
             if (tabControl1.SelectedIndex == 1)
             {
                 FillSectors();
+                sectorsGrid.ClearSelection();
             }
             if (tabControl1.SelectedIndex == 2)
             {
@@ -186,11 +210,57 @@ namespace Diploma
             FillSectors();
         }
 
+        private void FillSectorDocuments(int id)
+        {
+            listView1.Items.Clear();
+            var t = unitOfWork.GetRepository<sectorsd_documents>().Find(a => a.SectorId == id).ToList();
+            t.ForEach(a =>
+            {
+                var item = new ListViewItem(new string[]
+                {
+                    a.Name,
+                    a.Author,
+
+                }, SetIcon(a.Name));
+                item.Tag = a.id;
+                listView1.Items.Add(item);
+            });
+
+        }
+
+        private int SetIcon(string name)
+        {
+            var exten = Path.GetExtension(name);
+            switch (exten)
+            {
+                case ".doc":
+                case ".docx": { } return 0;
+                case ".txt": { } return 1;
+                case ".pdf": { } return 3;
+                case ".jpeg":
+                case ".gif":
+                case ".png":
+                case ".jpg": { } return 4;
+                default:
+                    return 2;
+
+            }
+
+        }
+        private int sectorId;
         private void dataGridView3_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
+            var grid = sender as DataGridView;
+
             if (e.RowIndex >= 0)
             {
                 panel1.BringToFront();
+                if (grid == sectorsGrid)
+                {
+                    sectorId = int.Parse(grid.Rows[e.RowIndex].Cells[0].Value.ToString());
+                    FillSectorDocuments(sectorId);
+                    listView1_ItemSelectionChanged(listView1, null);
+                }
             }
         }
 
@@ -207,14 +277,16 @@ namespace Diploma
             sectorsGrid.Rows.Clear();
             if (sectorsGrid.ColumnCount == 0)
             {
+                sectorsGrid.Columns.Add("Id", "Id");
                 sectorsGrid.Columns.Add("Name", "Имя");
                 sectorsGrid.Columns.Add("obj", "Объект");
+                sectorsGrid.Columns[0].Visible = false;
             }
             dataGridView1_DataBindingComplete(sectorsGrid, null);
             var t = unitOfWork.GetRepository<sectors>().GetAll().ToList().Where(a => a.name.ToLower().Contains(textBox1.Text.ToLower()) && a.objects.name.ToLower().Contains(textBox2.Text.ToLower())).ToList();
             foreach (var a in t)
             {
-                sectorsGrid.Rows.Add(a.name, a.objects.name);
+                sectorsGrid.Rows.Add(a.id, a.name, a.objects.name);
             }
             sectorsGrid.Refresh();
         }
@@ -299,6 +371,123 @@ namespace Diploma
             textBox.Select(startIndex, category.Length + 1);
             textBox.SelectionFont = new System.Drawing.Font("Tahoma", 9);
             textBox.SelectionAlignment = HorizontalAlignment.Left;
+        }
+
+        private void AddButton_Click(object sender, EventArgs e)
+        {
+            var fileName = "";
+            var shortName = "";
+            using (var selectFileDialog = new OpenFileDialog()
+            {
+                Multiselect = true,
+            })
+            {
+                if (selectFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    for (int i = 0; i < selectFileDialog.FileNames.Length; i++)
+                    {
+                        fileName = selectFileDialog.FileNames[i];
+                        shortName = selectFileDialog.SafeFileNames[i];
+                        var bytes = File.ReadAllBytes(fileName);
+                        var doc = new sectorsd_documents()
+                        {
+                            CanEdit = true,
+                            Name = shortName,
+                            Author = "Author",
+                            Data = bytes,
+                            SectorId = sectorId
+                        };
+                        unitOfWork.GetRepository<sectorsd_documents>().Add(doc);
+                    }
+                    unitOfWork.Save();
+                    FillSectorDocuments(sectorId);
+                }
+            }
+
+        }
+
+        private void listView1_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 1)
+            {
+                button1.Enabled = button5.Enabled = true;
+                button2.Enabled =
+                    button3.Enabled = button4.Enabled = button6.Enabled = button7.Enabled = false;
+
+            }
+            else if (listView1.SelectedItems.Count == 1)
+            {
+                button1.Enabled = button5.Enabled = button7.Enabled = true;
+                button2.Enabled =
+                    button3.Enabled = button4.Enabled = button6.Enabled = false;
+
+                 string[] Files = Directory.GetFiles("Edited/")
+                                     .Select(path => Path.GetFileName(path))
+                                     .ToArray();
+                var doc = unitOfWork.GetRepository<sectorsd_documents>().GetById((int)listView1.SelectedItems[0].Tag);
+                if (Files.Contains(doc.Name))
+                {
+                    button2.Enabled = true;
+                    button4.Enabled = true;
+                    button1.Enabled = button5.Enabled = button7.Enabled = false;
+                }
+    }
+            else
+            {
+                 button3.Enabled = true;
+                button2.Enabled = button1.Enabled = button5.Enabled = button7.Enabled =
+                   button4.Enabled = button6.Enabled = false;
+            }
+        }
+
+        private void DeleteButton_click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < listView1.SelectedItems.Count; i++)
+            {
+                var doc = unitOfWork.GetRepository<sectorsd_documents>().GetById((int)listView1.SelectedItems[i].Tag);
+                unitOfWork.GetRepository<sectorsd_documents>().Delete(doc);
+            }
+            unitOfWork.Save();
+            FillSectorDocuments(sectorId);
+        }
+
+
+        private void EditButton_click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count != 1)
+            {
+                MessageBox.Show("Only one item can be edited");
+                return;
+            }
+            else
+            {
+                var doc = unitOfWork.GetRepository<sectorsd_documents>().GetById((int)listView1.SelectedItems[0].Tag);
+                if (doc.CanEdit != null && !doc.CanEdit.Value)
+                {
+                    MessageBox.Show("File is being edited already");
+                    return;
+                }
+                doc.CanEdit = false;
+                unitOfWork.GetRepository<sectorsd_documents>().Update(doc);
+                unitOfWork.Save();
+                button2.Enabled = true;
+                button4.Enabled = true;
+                File.WriteAllBytes("Edited/"+doc.Name, doc.Data);
+                Process.Start(doc.Name);
+                listView1_ItemSelectionChanged(listView1, null);
+            }
+        }
+
+        private void CancelEdit_Click(object sender, EventArgs e)
+        {
+            var doc = unitOfWork.GetRepository<sectorsd_documents>().GetById((int)listView1.SelectedItems[0].Tag);
+            doc.CanEdit = true;
+            button2.Enabled = false;
+            button4.Enabled = false;
+            unitOfWork.GetRepository<sectorsd_documents>().Update(doc);
+            unitOfWork.Save();
+            File.Delete("Edited/"+doc.Name);
+            listView1_ItemSelectionChanged(listView1, null);
         }
     }
 }
