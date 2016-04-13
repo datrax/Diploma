@@ -49,34 +49,20 @@ namespace Diploma
         }
         public Form1()
         {
-            InitializeComponent();
 
+            InitializeComponent();
+            unitOfWork = new UnitOfWork<EFModel>();
             panel1.SendToBack();
             tabControl1.TabPages[0].Text = ("Объекты");
             tabControl1.TabPages[1].Text = ("Участки");
             tabControl1.TabPages[2].Text = ("Скважины");
             tabControl1.TabPages[3].Text = ("Прочее");
             tabControl1.DrawItem += tabControl1_DrawItem;
-            this.dataGridView2.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
-            foreach (DataGridViewRow row in dataGridView2.Rows)
-            {
-                row.Height = 32;
-                row.DefaultCellStyle.Font = new Font("Arial", 20.5F, GraphicsUnit.Pixel);
-            }
-            button2.Enabled = true;
-            unitOfWork = new UnitOfWork<EFModel>();
-            dataGridView3.MouseDoubleClick += clicks;
+
+            /////////////////////////////////////////////////////////////////////
             listView1.View = View.Tile;
             listView1.TileSize = new Size(200, 45);
-            dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.Sunken;
-            // dataGridView1.
-            foreach (DataGridViewRow row in dataGridView1.Rows)
-            {
-                row.Height = 30;
-                row.DefaultCellStyle.Font = new Font("Arial", 32.5F, GraphicsUnit.Pixel);
-            }
-            dataGridView1.ClearSelection();
 
             // Add column headers so the subitems will appear.
             listView1.Columns.AddRange(new ColumnHeader[]
@@ -105,15 +91,10 @@ namespace Diploma
 
             listView1.Items.AddRange(
                 new ListViewItem[] { item0, item1 });
+            //////////////////////////////////////////////////////////////////////
             FillObjects();
         }
 
-        private void clicks(object sender, MouseEventArgs e)
-        {
-            var t = (sender as DataGridView).CurrentCell.RowIndex;
-            //     MessageBox.Show((sender as DataGridView).Rows[t].Cells[1].Value.ToString());
-            //   panel1.BringToFront();
-        }
 
         private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
@@ -158,7 +139,7 @@ namespace Diploma
         }
 
         private void button2_Click(object sender, EventArgs e)
-        {  
+        {
         }
 
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -179,7 +160,7 @@ namespace Diploma
 
         private void tabControl1_MouseClick(object sender, MouseEventArgs e)
         {
-            richTextBox1.Text = "";
+            informationTextBox.Text = "";
             panel1.SendToBack();
             if (tabControl1.SelectedIndex == 0)
             {
@@ -207,63 +188,62 @@ namespace Diploma
 
         private void dataGridView3_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-
             if (e.RowIndex >= 0)
             {
                 panel1.BringToFront();
             }
-   
-
         }
 
         private void FillObjects()
         {
 
-            dataGridView1.DataSource =
+            objectsGrid.DataSource =
             unitOfWork.GetRepository<objects>().GetAll().ToList().Select(a => new { Имя = a.name }).ToList();
-            dataGridView1.Refresh();
+            objectsGrid.Refresh();
         }
 
         private void FillSectors()
         {
-            dataGridView3.Rows.Clear();
-            if (dataGridView3.ColumnCount == 0)
+            sectorsGrid.Rows.Clear();
+            if (sectorsGrid.ColumnCount == 0)
             {
-                dataGridView3.Columns.Add("Name", "Имя");
-                dataGridView3.Columns.Add("obj", "Объект");
+                sectorsGrid.Columns.Add("Name", "Имя");
+                sectorsGrid.Columns.Add("obj", "Объект");
             }
-            dataGridView1_DataBindingComplete(dataGridView3, null);
+            dataGridView1_DataBindingComplete(sectorsGrid, null);
             var t = unitOfWork.GetRepository<sectors>().GetAll().ToList().Where(a => a.name.ToLower().Contains(textBox1.Text.ToLower()) && a.objects.name.ToLower().Contains(textBox2.Text.ToLower())).ToList();
             foreach (var a in t)
             {
-                dataGridView3.Rows.Add(a.name, a.objects.name);
+                sectorsGrid.Rows.Add(a.name, a.objects.name);
             }
-            dataGridView3.Refresh();
+            sectorsGrid.Refresh();
         }
 
         private void FillWells()
         {
-            dataGridView4.Rows.Clear();
-            if (dataGridView4.ColumnCount == 0)
+            wellsGrid.Rows.Clear();
+            if (wellsGrid.ColumnCount == 0)
             {
-                dataGridView4.Columns.Add("Name", "Имя");
-                dataGridView4.Columns.Add("Sector", "Участок");
-                dataGridView4.Columns.Add("Coords", "Коорд");
-                dataGridView4.Columns.Add("Depth", "Глубина");
-                dataGridView4.Columns.Add("Note", "Заметка");
-                dataGridView4.Columns.Add("Date", "Дата");
-                dataGridView4.Columns.Add("IndAlt", "Инд. Выс.");
-                dataGridView4.Columns.Add("LevAlt", "Ур. Выс.");
-                dataGridView4.Columns.Add("Horizon", "Гор.");
-                dataGridView4.Columns.Add("FiltUp", "Фильтр. верх");
-                dataGridView4.Columns.Add("FiltDown", "Фильтр. низ");
+                wellsGrid.Columns.Add("Id", "Id");
+                wellsGrid.Columns.Add("Name", "Имя");
+                wellsGrid.Columns.Add("Sector", "Участок");
+                wellsGrid.Columns.Add("Coords", "Коорд");
+                wellsGrid.Columns.Add("Depth", "Глубина");
+                wellsGrid.Columns.Add("Note", "Заметка");
+                wellsGrid.Columns.Add("Date", "Дата");
+                wellsGrid.Columns.Add("IndAlt", "Инд. Выс.");
+                wellsGrid.Columns.Add("LevAlt", "Ур. Выс.");
+                wellsGrid.Columns.Add("Horizon", "Гор.");
+                wellsGrid.Columns.Add("FiltUp", "Фильтр. верх");
+                wellsGrid.Columns.Add("FiltDown", "Фильтр. низ");
+                wellsGrid.Columns[0].Visible = false;
             }
-            var t = unitOfWork.GetRepository<wells>().GetAll().Where(a=>a.char_name.ToLower().Contains(extendedTextBox1.Text)).ToList();
+            var t = unitOfWork.GetRepository<wells>().GetAll().Where(a => a.char_name.ToLower().Contains(extendedTextBox1.Text.ToLower())).ToList();
             foreach (var a in t)
             {
-                dataGridView4.Rows.Add(a.char_name, a.sectors.name,a.coordX+" "+a.coordY,a.depth,a.note,a.date,a.index_altitude,a.level_altitude,a.horizon,a.filter_up,a.filter_down);
+                wellsGrid.Rows.Add(a.id, a.char_name, a.sectors.name, a.coordX + " " + a.coordY, a.depth, a.note, a.date, a.index_altitude, a.level_altitude, a.horizon, a.filter_up, a.filter_down);
             }
-            dataGridView4.Refresh();
+            wellsGrid.Refresh();
         }
 
         private void extendedTextBox1_TextChanged(object sender, EventArgs e)
@@ -271,28 +251,54 @@ namespace Diploma
             FillWells();
         }
 
-        private void dataGridView3_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void sectorsGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            richTextBox1.Text = "";
+            informationTextBox.Text = "";
             var grid = sender as DataGridView;
-            if (grid == dataGridView3)
-            {
-                richTextBox1.Text += "Объект:\n" + dataGridView3.Rows[e.RowIndex].Cells[1].Value + "\n" + "Участок:\n" +
-                                     dataGridView3.Rows[e.RowIndex].Cells[0].Value;
-                   ;
-            }
-            var length1 = dataGridView3.Rows[e.RowIndex].Cells[1].Value.ToString().Length;
-            var length2 = dataGridView3.Rows[e.RowIndex].Cells[0].Value.ToString().Length;
-            richTextBox1.SelectionStart = 0;
-            richTextBox1.SelectionLength = 8; //End of first word
-            richTextBox1.SelectionFont = new System.Drawing.Font("Tahoma", 10);
-            richTextBox1.SelectionAlignment = HorizontalAlignment.Left;
+            AddInformationToRichTextbox(informationTextBox, "Объект", grid.Rows[e.RowIndex].Cells[1].Value.ToString());
+            AddInformationToRichTextbox(informationTextBox, "Участок", grid.Rows[e.RowIndex].Cells[0].Value.ToString());
+        }
 
-            richTextBox1.SelectionStart = 8+length1;
-            richTextBox1.SelectionLength = 8; //End of first word
-            richTextBox1.SelectionFont = new System.Drawing.Font("Tahoma", 10);
-            richTextBox1.SelectionAlignment = HorizontalAlignment.Left;
-          
+        private void wellsGrid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            informationTextBox.Text = "";
+            var grid = sender as DataGridView;
+            var well = unitOfWork.GetRepository<wells>().GetById(long.Parse(grid.Rows[e.RowIndex].Cells[0].Value.ToString()));
+            AddInformationToRichTextbox(informationTextBox, "Id", well.id.ToString());
+            AddInformationToRichTextbox(informationTextBox, "Объект", well.sectors.objects.name);
+            if (!string.IsNullOrWhiteSpace(well.sectors.name))
+                AddInformationToRichTextbox(informationTextBox, "Участок", well.sectors.name);
+            if (!string.IsNullOrWhiteSpace(well.char_name))
+                AddInformationToRichTextbox(informationTextBox, "Скважина", well.char_name);
+            AddInformationToRichTextbox(informationTextBox, "Координаты (X;Y)", "(" + well.coordX + ";" + well.coordY + ")");
+            if (!string.IsNullOrWhiteSpace(well.note))
+                AddInformationToRichTextbox(informationTextBox, "Заметка", well.note);
+            if (!string.IsNullOrWhiteSpace(well.date.ToString()))
+                AddInformationToRichTextbox(informationTextBox, "Дата", well.date.ToString());
+            if (!string.IsNullOrWhiteSpace(well.depth.ToString()))
+                AddInformationToRichTextbox(informationTextBox, "Глубина", well.depth.ToString());
+            if (!string.IsNullOrWhiteSpace(well.index_altitude.ToString()))
+                AddInformationToRichTextbox(informationTextBox, "Инд. Выс.", well.index_altitude.ToString());
+            if (!string.IsNullOrWhiteSpace(well.level_altitude.ToString()))
+                AddInformationToRichTextbox(informationTextBox, "Ур. Выс.", well.level_altitude.ToString());
+            if (!string.IsNullOrWhiteSpace(well.horizon.ToString()))
+                AddInformationToRichTextbox(informationTextBox, "Горизонт", well.horizon.ToString());
+            if (!string.IsNullOrWhiteSpace(well.filter_up.ToString()))
+                AddInformationToRichTextbox(informationTextBox, "Фильтр. верх", well.filter_up.ToString());
+            if (!string.IsNullOrWhiteSpace(well.filter_down.ToString()))
+                AddInformationToRichTextbox(informationTextBox, "Фильтр. низ", well.filter_down.ToString());
+        }
+
+        void AddInformationToRichTextbox(RichTextBox textBox, string category, string str)
+        {
+            var startIndex = textBox.Text.Length;
+            textBox.AppendText(category + ":\n" + str + "\n");
+            textBox.SelectionStart = startIndex + 1;
+            textBox.SelectionLength = category.Length + 1;
+
+            textBox.Select(startIndex, category.Length + 1);
+            textBox.SelectionFont = new System.Drawing.Font("Tahoma", 9);
+            textBox.SelectionAlignment = HorizontalAlignment.Left;
         }
     }
 }

@@ -17,3 +17,4 @@ C:\Users\datra\Documents\GitHub\Diploma\DAL\bin\Debug\EntityFramework.xml
 C:\Users\datra\Documents\GitHub\Diploma\DAL\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\datra\Documents\GitHub\Diploma\DAL\obj\Debug\DAL.dll
 C:\Users\datra\Documents\GitHub\Diploma\DAL\obj\Debug\DAL.pdb
+C:\Users\datra\Documents\GitHub\Diploma\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
