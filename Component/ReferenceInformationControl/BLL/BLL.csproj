@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOModel\SectorsDocumentsDTO.cs" />
     <Compile Include="Services.cs" />
     <Compile Include="DTOModel\ObjectsDTO.cs" />
     <Compile Include="DTOModel\SectorsDTO.cs" />

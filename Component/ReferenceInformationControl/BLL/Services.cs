@@ -51,5 +51,27 @@ namespace BLL
                 return (rowObject as ObjectsDTO).ToString();
             return "";
         }
+
+        public IEnumerable<SectorsDocumentsDTO> GetDocuments(int id)
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<sectorsd_documents, SectorsDocumentsDTO>());
+            var mapper = config.CreateMapper();
+            return mapper.Map<List<SectorsDocumentsDTO>>(unitOfWork.GetRepository<sectorsd_documents>().Find(a=>a.SectorId==id)).ToList();
+        }
+
+        public void AddSectorDocument(string shortName,string author,byte[] bytes,int sectorId)
+        {
+
+            var doc = new sectorsd_documents()
+            {
+                CanEdit = true,
+                Name = shortName,
+                Author = author,
+                Data = bytes,
+                SectorId = sectorId
+            };
+            unitOfWork.GetRepository<sectorsd_documents>().Add(doc);
+            unitOfWork.Save();
+        }
     }
 }
