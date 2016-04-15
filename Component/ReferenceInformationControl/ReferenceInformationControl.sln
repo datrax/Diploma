@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectListView2012", "ObjectListView\ObjectListView\ObjectListView2012.csproj", "{18FEDA0C-D147-4286-B39A-01204808106A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "..\..\oldUI\DAL\DAL.csproj", "{80BD5E89-BE32-4779-B229-10A79890A129}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApplication1", "WindowsFormsApplication1\WindowsFormsApplication1.csproj", "{2E1D793C-104C-4FB5-BF88-6073D7DC59A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferenceInfoControl", "ReferenceInfoControl\ReferenceInfoControl.csproj", "{5EA8117A-704C-4997-8ADE-0B9AB28F2D02}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{7E64D15D-6B7F-4C46-8175-EDEC1D8F3192}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectsReferenceInformationControl", "ObjectsReferenceInformationControl\ObjectsReferenceInformationControl.csproj", "{C2B70D1D-1A91-4C1F-A381-AF1C71C96DEB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{18FEDA0C-D147-4286-B39A-01204808106A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18FEDA0C-D147-4286-B39A-01204808106A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18FEDA0C-D147-4286-B39A-01204808106A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18FEDA0C-D147-4286-B39A-01204808106A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80BD5E89-BE32-4779-B229-10A79890A129}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80BD5E89-BE32-4779-B229-10A79890A129}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80BD5E89-BE32-4779-B229-10A79890A129}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80BD5E89-BE32-4779-B229-10A79890A129}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E1D793C-104C-4FB5-BF88-6073D7DC59A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E1D793C-104C-4FB5-BF88-6073D7DC59A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E1D793C-104C-4FB5-BF88-6073D7DC59A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E1D793C-104C-4FB5-BF88-6073D7DC59A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EA8117A-704C-4997-8ADE-0B9AB28F2D02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EA8117A-704C-4997-8ADE-0B9AB28F2D02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EA8117A-704C-4997-8ADE-0B9AB28F2D02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EA8117A-704C-4997-8ADE-0B9AB28F2D02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E64D15D-6B7F-4C46-8175-EDEC1D8F3192}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E64D15D-6B7F-4C46-8175-EDEC1D8F3192}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E64D15D-6B7F-4C46-8175-EDEC1D8F3192}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E64D15D-6B7F-4C46-8175-EDEC1D8F3192}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2B70D1D-1A91-4C1F-A381-AF1C71C96DEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2B70D1D-1A91-4C1F-A381-AF1C71C96DEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2B70D1D-1A91-4C1F-A381-AF1C71C96DEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2B70D1D-1A91-4C1F-A381-AF1C71C96DEB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,5 +1,0 @@
-C:\Users\datra\Documents\GitHub\Diploma\Extended textbox\bin\Debug\Extended textbox.dll
-C:\Users\datra\Documents\GitHub\Diploma\Extended textbox\bin\Debug\Extended textbox.pdb
-C:\Users\datra\Documents\GitHub\Diploma\Extended textbox\obj\Debug\Extended textbox.dll
-C:\Users\datra\Documents\GitHub\Diploma\Extended textbox\obj\Debug\Extended textbox.pdb
-C:\Users\datra\Documents\GitHub\Diploma\Extended textbox\obj\Debug\Extended textbox.csprojResolveAssemblyReference.cache
