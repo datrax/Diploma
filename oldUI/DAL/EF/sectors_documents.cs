@@ -6,7 +6,7 @@ namespace DAL.EF
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class sectorsd_documents
+    public partial class sectors_documents
     {
         public int id { get; set; }
 
@@ -18,10 +18,20 @@ namespace DAL.EF
         [Required]
         public byte[] Data { get; set; }
 
-        [StringLength(150)]
-        public string Author { get; set; }
+        public int? Author { get; set; }
 
-        public bool? CanEdit { get; set; }
+        public bool BeingEdited { get; set; }
+
+        public bool UsersCanEdit { get; set; }
+
+        public bool IsPrivate { get; set; }
+
+        [Required]
+        public string Version { get; set; }
+
+        public DateTime? DateTime { get; set; }
+
+        public virtual performers performers { get; set; }
 
         public virtual sectors sectors { get; set; }
     }

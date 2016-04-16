@@ -13,11 +13,11 @@ namespace BLL.DTOModel
     {
         [OLVColumn("Id", Width = 35, TextAlign = HorizontalAlignment.Center, IsVisible = false, DisplayIndex = 0)]
         public int id { get; set; }
-        [OLVColumn("Сектор", Width = 100, TextAlign = HorizontalAlignment.Center, IsVisible = true,DisplayIndex = 2)]
+        [OLVColumn("Объкт", Width = 100, TextAlign = HorizontalAlignment.Center, IsVisible = true,DisplayIndex = 2)]
         public string objectName { get; set; }
         [OLVColumn("Id Объкта", Width = 100, TextAlign = HorizontalAlignment.Center, IsVisible = false, DisplayIndex = 3)]
         public int? object_id { get; set; }
-        [OLVColumn("Объкт", Width = 100, TextAlign = HorizontalAlignment.Center, IsVisible = true,DisplayIndex = 1)]
+        [OLVColumn("Участок", Width = 100, TextAlign = HorizontalAlignment.Center, IsVisible = true,DisplayIndex = 1)]
         public string name { get; set; }
         public override string ToString()
         {

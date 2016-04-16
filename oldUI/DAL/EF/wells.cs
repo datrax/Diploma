@@ -8,6 +8,12 @@ namespace DAL.EF
 
     public partial class wells
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public wells()
+        {
+            wells_documents = new HashSet<wells_documents>();
+        }
+
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
@@ -37,5 +43,8 @@ namespace DAL.EF
         public DateTime? date { get; set; }
 
         public virtual sectors sectors { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<wells_documents> wells_documents { get; set; }
     }
 }

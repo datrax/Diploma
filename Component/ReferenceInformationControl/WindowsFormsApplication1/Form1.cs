@@ -29,5 +29,11 @@ namespace WindowsFormsApplication1
         {
             (sender as UserControl1).UserId = 4;
         }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+
+           userControl11.UserId = Convert.ToInt32(numericUpDown1.Value);
+        }
     }
 }

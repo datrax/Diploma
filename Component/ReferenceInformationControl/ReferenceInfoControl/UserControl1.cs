@@ -18,6 +18,8 @@ namespace ReferenceInfoControl
     public partial class UserControl1 : UserControl
     {
         Services services = new Services();
+        private SelectedItem selectedItem = new SelectedItem();
+        public int UserId { get; set; }
         public UserControl1()
         {
             InitializeComponent();
@@ -57,6 +59,7 @@ namespace ReferenceInfoControl
 
             //      objectListView1.Heade
             this.objectListView1.CellToolTipShowing += olv_CellToolTipShowing;
+            this.objectListView2.CellToolTipShowing += olv_CellToolTipShowing2;
             TextOverlay textOverlay = this.objectListView1.EmptyListMsgOverlay as TextOverlay;
             textOverlay.TextColor = Color.Firebrick;
             textOverlay.BackColor = Color.AntiqueWhite;
@@ -67,7 +70,7 @@ namespace ReferenceInfoControl
             objectListView1.Refresh();
             NameColumn.ImageGetter += delegate (object rowObject)
             {
-                var ob = rowObject as SectorsDocumentsDTO;
+                var ob = rowObject as DocumentsDTO;
                 if (ob == null) return 0;
                 if (ob.Name.EndsWith(".doc")) return 2;
                 if (ob.Name.EndsWith(".docx")) return 3;
@@ -91,11 +94,18 @@ namespace ReferenceInfoControl
             //        e.Text =Services.GetItemAsString( objectListView1.FocusedObject);
             //      objectListView1.Items[objectListView1.HotRowIndex].Focused = false;
 
+            objectListView2.CellToolTip.IsBalloon = true;
+            objectListView2.CellToolTip.Font = new Font("Tahoma", 14);
+        }
+
+        void olv_CellToolTipShowing2(object sender, ToolTipShowingEventArgs e)
+        {
+            if (objectListView2.SelectedObjects.Count > 1)
+                return;
+            e.Text = Services.GetItemAsString(e.Item.RowObject);            
             objectListView1.CellToolTip.IsBalloon = true;
             objectListView1.CellToolTip.Font = new Font("Tahoma", 14);
         }
-
-
         private void button1_Click(object sender, EventArgs e)
         {
             textBox1.Text = "";
@@ -120,7 +130,7 @@ namespace ReferenceInfoControl
             objectListView1.SetObjects(services.GetWells());
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void FilterButton_Click(object sender, EventArgs e)
         {
             this.objectListView1.ModelFilter = null;
             var text = textBox1.Text;
@@ -138,15 +148,30 @@ namespace ReferenceInfoControl
 
         private void objectListView1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+
+            selectedItem.SetItem(objectListView1.SelectedItem.RowObject);
+            //     MessageBox.Show(selectedItem.Id.ToString(),selectedItem.item.GetType().Name);
             tabControl1.SelectedIndex = 1;
 
+            objectListView2.OLVGroups = null;
+            objectListView2.SetObjects(null);
+            objectListView2.Refresh();
+            objectListView2.Invalidate();
             LoadSectorDocuments();
             objectListView2.Refresh();
+            objectListView2.Invalidate();
         }
 
         void LoadSectorDocuments()
         {
-            objectListView2.SetObjects(services.GetDocuments((objectListView1.SelectedItem.RowObject as SectorsDTO).id));
+            objectListView2.SetObjects(services.GetDocuments(selectedItem.Id, selectedItem.item.GetType()));
+            /*        if (objectListView2.OLVGroups != null
+                    )
+                        for (int i = 0; i < objectListView2.OLVGroups.Count; i++)
+                        {
+                            objectListView2.OLVGroups[i].Collapsed = true;
+                        }*/
+            objectListView2.Refresh();
         }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
@@ -156,7 +181,7 @@ namespace ReferenceInfoControl
             }
         }
 
-        public int UserId { get; set; }
+
 
         private void button1_Click_1(object sender, EventArgs e)
         {
@@ -165,7 +190,7 @@ namespace ReferenceInfoControl
 
         private void objectListView2_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            MessageBox.Show(objectListView2.SelectedItem.Text);
+            MessageBox.Show(Services.GetItemAsString(objectListView2.SelectedObjects[0]));
         }
 
         private void button2_Click_1(object sender, EventArgs e)
@@ -182,7 +207,7 @@ namespace ReferenceInfoControl
                         var fileName = selectFileDialog.FileNames[i];
                         var shortName = selectFileDialog.SafeFileNames[i];
                         var bytes = File.ReadAllBytes(fileName);
-                        services.AddSectorDocument(shortName, "auth", bytes, (objectListView1.SelectedItem.RowObject as SectorsDTO).id);
+                        services.AddSectorDocument(shortName, UserId, bytes, selectedItem.Id,selectedItem.item.GetType());
                     }
                     LoadSectorDocuments();
                 }
@@ -193,11 +218,32 @@ namespace ReferenceInfoControl
         {
             if (checkBox1.Checked)
             {
-                objectListView2.ShowGroups = true;
+                objectListView2.ShowGroups = true;  
+                objectListView2.BuildGroups();            
             }
             else
+            {
                 objectListView2.ShowGroups = false;
+                objectListView2.BuildGroups();
+            }
             objectListView2.Refresh();
+        }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void objectListView2_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            if (checkBox1.Checked && objectListView2.OLVGroups != null)
+            {
+                for (int i = 0; i < objectListView2.OLVGroups.Count; i++)
+                {
+                    objectListView2.OLVGroups[i].Collapsed = true;
+                }
+            }
+
         }
     }
 }

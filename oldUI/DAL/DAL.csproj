@@ -53,9 +53,13 @@
   <ItemGroup>
     <Compile Include="EF\ModelContext.cs" />
     <Compile Include="EF\objects.cs" />
+    <Compile Include="EF\objects_documents.cs" />
+    <Compile Include="EF\performers.cs" />
+    <Compile Include="EF\performers_roles.cs" />
     <Compile Include="EF\sectors.cs" />
-    <Compile Include="EF\sectorsd_documents.cs" />
+    <Compile Include="EF\sectors_documents.cs" />
     <Compile Include="EF\wells.cs" />
+    <Compile Include="EF\wells_documents.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

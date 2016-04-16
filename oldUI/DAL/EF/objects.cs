@@ -11,6 +11,7 @@ namespace DAL.EF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public objects()
         {
+            objects_documents = new HashSet<objects_documents>();
             sectors = new HashSet<sectors>();
         }
 
@@ -18,6 +19,9 @@ namespace DAL.EF
 
         [StringLength(192)]
         public string name { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<objects_documents> objects_documents { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<sectors> sectors { get; set; }
