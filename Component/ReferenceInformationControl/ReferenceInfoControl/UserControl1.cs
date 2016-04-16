@@ -18,8 +18,8 @@ namespace ReferenceInfoControl
 {
     public partial class UserControl1 : UserControl
     {
-        Services services = new Services();
-        private SelectedItem selectedItem = new SelectedItem();
+        public Services services = new Services();
+        public SelectedItem selectedItem = new SelectedItem();
         public int UserId { get; set; }
         public UserControl1()
         {
@@ -164,7 +164,7 @@ namespace ReferenceInfoControl
             if (e.KeyCode == Keys.Enter)
                 objectListView1_MouseDoubleClick(objectListView1, null);
         }
-        void LoadDocuments()
+        public void LoadDocuments()
         {
             objectListView2.SetObjects(services.GetDocuments(selectedItem.Id, selectedItem.item.GetType()));
             /*        if (objectListView2.OLVGroups != null
@@ -197,7 +197,7 @@ namespace ReferenceInfoControl
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-            using (var selectFileDialog = new OpenFileDialog()
+        /*    using (var selectFileDialog = new OpenFileDialog()
             {
                 Multiselect = true,
             })
@@ -209,11 +209,12 @@ namespace ReferenceInfoControl
                         var fileName = selectFileDialog.FileNames[i];
                         var shortName = selectFileDialog.SafeFileNames[i];
                         var bytes = File.ReadAllBytes(fileName);
-                        services.AddSectorDocument(shortName, UserId, bytes, selectedItem.Id, selectedItem.item.GetType());
+                        services.AddFile(shortName, UserId, bytes, selectedItem.Id, selectedItem.item.GetType());
                     }
                     LoadDocuments();
                 }
-            }
+            }*/
+            new AddFileForm(this).ShowDialog();
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)

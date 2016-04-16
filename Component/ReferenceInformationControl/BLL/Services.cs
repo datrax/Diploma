@@ -95,7 +95,7 @@ namespace BLL
             return null;
         }
 
-        public void AddSectorDocument(string shortName, int authorId, byte[] bytes, int sectorId, Type type)
+        public void AddFile(string shortName, int authorId, string version,byte[] bytes, int sectorId,bool isPrivate,bool canBeEdited, Type type)
         {
             if (type.Name == "SectorsDTO")
             {
@@ -106,8 +106,10 @@ namespace BLL
                     Author = authorId,
                     Data = bytes,
                     SectorId = sectorId,
-                    Version = "1.0",
+                    Version = version,
                     DateTime = DateTime.Now,
+                    IsPrivate = isPrivate,
+                    UsersCanEdit = canBeEdited
                 };
 
                 unitOfWork.GetRepository<sectors_documents>().Add(doc);
@@ -122,8 +124,10 @@ namespace BLL
                     Author = authorId,
                     Data = bytes,
                     ObjectId = sectorId,
-                    Version = "1.0",
+                    Version = version,
                     DateTime = DateTime.Now,
+                    IsPrivate = isPrivate,
+                    UsersCanEdit = canBeEdited
                 };
 
                 unitOfWork.GetRepository<objects_documents>().Add(doc);
@@ -138,8 +142,10 @@ namespace BLL
                     Author = authorId,
                     Data = bytes,
                     WellId = sectorId,
-                    Version = "1.0",
+                    Version = version,
                     DateTime = DateTime.Now,
+                    IsPrivate = isPrivate,
+                    UsersCanEdit = canBeEdited
                 };
 
                 unitOfWork.GetRepository<wells_documents>().Add(doc);
