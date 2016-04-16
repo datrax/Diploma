@@ -62,7 +62,7 @@ namespace BLL
                     new MapperConfiguration(
                         cfg =>
                             cfg.CreateMap<sectors_documents, DocumentsDTO>()
-                                .ForMember(a => a.AuthorName, o => o.MapFrom(s => GetAuthor(s.Author.Value))).ForMember(a => a.DocumentId, o => o.MapFrom(s => s.SectorId)));
+                                .ForMember(a => a.AuthorName, o => o.MapFrom(s => GetAuthor(s.Author.Value))).ForMember(a => a.ParentId, o => o.MapFrom(s => s.SectorId)));
                 var mapper = config.CreateMapper();
                 return
                     mapper.Map<List<DocumentsDTO>>(
@@ -74,7 +74,7 @@ namespace BLL
                     new MapperConfiguration(
                         cfg =>
                             cfg.CreateMap<objects_documents, DocumentsDTO>()
-                                .ForMember(a => a.AuthorName, o => o.MapFrom(s => GetAuthor(s.Author.Value))).ForMember(a => a.DocumentId, o => o.MapFrom(s => s.ObjectId)));
+                                .ForMember(a => a.AuthorName, o => o.MapFrom(s => GetAuthor(s.Author.Value))).ForMember(a => a.ParentId, o => o.MapFrom(s => s.ObjectId)));
                 var mapper = config.CreateMapper();
                 return
                     mapper.Map<List<DocumentsDTO>>(
@@ -86,7 +86,7 @@ namespace BLL
                     new MapperConfiguration(
                         cfg =>
                             cfg.CreateMap<wells_documents, DocumentsDTO>()
-                                .ForMember(a => a.AuthorName, o => o.MapFrom(s => GetAuthor(s.Author.Value))).ForMember(a => a.DocumentId, o => o.MapFrom(s => s.WellId)));
+                                .ForMember(a => a.AuthorName, o => o.MapFrom(s => GetAuthor(s.Author.Value))).ForMember(a => a.ParentId, o => o.MapFrom(s => s.WellId)));
                 var mapper = config.CreateMapper();
                 return
                     mapper.Map<List<DocumentsDTO>>(
@@ -150,6 +150,43 @@ namespace BLL
         public string GetAuthor(int id)
         {
             return unitOfWork.GetRepository<performers>().GetById(id).fio;
+        }
+        public void DeleteFile(int id,Type type)
+        {
+            if (type.Name == "SectorsDTO")
+            {
+                var doc = unitOfWork.GetRepository<sectors_documents>().GetById(id);
+                unitOfWork.GetRepository<sectors_documents>().Delete(doc);
+                unitOfWork.Save();
+            }
+            if (type.Name == "ObjectsDTO")
+            {
+                var doc = unitOfWork.GetRepository<objects_documents>().GetById(id);
+                unitOfWork.GetRepository<objects_documents>().Delete(doc);
+                unitOfWork.Save();
+            }
+            if (type.Name == "WellsDTO")
+            {
+                var doc = unitOfWork.GetRepository<wells_documents>().GetById(id);
+                unitOfWork.GetRepository<wells_documents>().Delete(doc);
+                unitOfWork.Save();
+            }
+        }
+        public byte[] GetDocumentByid(int id, Type type)
+        {
+            if (type.Name == "SectorsDTO")
+            {
+                return unitOfWork.GetRepository<sectors_documents>().GetById(id).Data;
+            }
+            if (type.Name == "ObjectsDTO")
+            {
+                return unitOfWork.GetRepository<objects_documents>().GetById(id).Data;
+            }
+            if (type.Name == "WellsDTO")
+            {
+                return unitOfWork.GetRepository<wells_documents>().GetById(id).Data;
+            }
+            return null;
         }
     }
 }

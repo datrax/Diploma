@@ -10,12 +10,12 @@ namespace BLL.DTOModel
     {
         public int id { get; set; }
 
-        public int DocumentId { get; set; }
+        public int ParentId { get; set; }
 
 
         public string Name { get; set; }
 
-        public byte[] Data { get; set; }
+//        public byte[] Data { get; set; }
 
 
         public string AuthorName { get; set; }

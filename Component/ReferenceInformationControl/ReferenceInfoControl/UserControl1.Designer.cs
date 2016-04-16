@@ -39,16 +39,19 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.button5 = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.objectListView2 = new BrightIdeasSoftware.ObjectListView();
             this.NameColumn = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.AuthorColumn = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.button1 = new System.Windows.Forms.Button();
             this.VersionColumn = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.DateColumn = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.button1 = new System.Windows.Forms.Button();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -88,6 +91,7 @@
             this.objectListView1.UseFiltering = true;
             this.objectListView1.UseHotItem = true;
             this.objectListView1.View = System.Windows.Forms.View.Details;
+            this.objectListView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.objectListView1_KeyDown);
             this.objectListView1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.objectListView1_MouseDoubleClick);
             // 
             // objectsButton
@@ -149,6 +153,7 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(750, 513);
             this.tabControl1.TabIndex = 6;
+            this.tabControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tabControl1_KeyDown);
             // 
             // tabPage1
             // 
@@ -168,6 +173,9 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.checkBox2);
+            this.tabPage2.Controls.Add(this.textBox2);
+            this.tabPage2.Controls.Add(this.button5);
             this.tabPage2.Controls.Add(this.checkBox1);
             this.tabPage2.Controls.Add(this.button3);
             this.tabPage2.Controls.Add(this.button2);
@@ -181,14 +189,33 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(76, 10);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(374, 20);
+            this.textBox2.TabIndex = 6;
+            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            // 
+            // button5
+            // 
+            this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button5.Location = new System.Drawing.Point(648, 228);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 5;
+            this.button5.Text = "Удалить";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(90, 12);
+            this.checkBox1.Location = new System.Drawing.Point(525, 12);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(80, 17);
+            this.checkBox1.Size = new System.Drawing.Size(89, 17);
             this.checkBox1.TabIndex = 4;
-            this.checkBox1.Text = "checkBox1";
+            this.checkBox1.Text = "групировать";
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
@@ -230,6 +257,8 @@
             this.VersionColumn,
             this.DateColumn});
             this.objectListView2.Cursor = System.Windows.Forms.Cursors.Default;
+            this.objectListView2.EmptyListMsg = "Нет файлов";
+            this.objectListView2.FullRowSelect = true;
             this.objectListView2.HighlightBackgroundColor = System.Drawing.Color.Empty;
             this.objectListView2.HighlightForegroundColor = System.Drawing.Color.Empty;
             this.objectListView2.LargeImageList = this.imageList1;
@@ -241,7 +270,8 @@
             this.objectListView2.SmallImageList = this.imageList1;
             this.objectListView2.TabIndex = 1;
             this.objectListView2.UseCompatibleStateImageBehavior = false;
-            this.objectListView2.View = System.Windows.Forms.View.Tile;
+            this.objectListView2.UseFiltering = true;
+            this.objectListView2.View = System.Windows.Forms.View.Details;
             this.objectListView2.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.objectListView2_ColumnClick);
             this.objectListView2.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.objectListView2_MouseDoubleClick);
             // 
@@ -256,6 +286,17 @@
             this.AuthorColumn.AspectName = "AuthorName";
             this.AuthorColumn.IsTileViewColumn = true;
             this.AuthorColumn.Text = "Автор";
+            // 
+            // VersionColumn
+            // 
+            this.VersionColumn.AspectName = "Version";
+            this.VersionColumn.IsTileViewColumn = true;
+            this.VersionColumn.Text = "Версия";
+            // 
+            // DateColumn
+            // 
+            this.DateColumn.AspectName = "dateTime";
+            this.DateColumn.Text = "Дата";
             // 
             // imageList1
             // 
@@ -280,16 +321,16 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
-            // VersionColumn
+            // checkBox2
             // 
-            this.VersionColumn.AspectName = "Version";
-            this.VersionColumn.IsTileViewColumn = true;
-            this.VersionColumn.Text = "Версия";
-            // 
-            // DateColumn
-            // 
-            this.DateColumn.AspectName = "dateTime";
-            this.DateColumn.Text = "Дата";
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(456, 12);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(63, 17);
+            this.checkBox2.TabIndex = 7;
+            this.checkBox2.Text = "Плитки";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
             // UserControl1
             // 
@@ -331,5 +372,8 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private BrightIdeasSoftware.OLVColumn VersionColumn;
         private BrightIdeasSoftware.OLVColumn DateColumn;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.CheckBox checkBox2;
     }
 }
