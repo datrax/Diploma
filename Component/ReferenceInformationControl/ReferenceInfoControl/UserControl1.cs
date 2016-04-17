@@ -394,7 +394,7 @@ namespace ReferenceInfoControl
                 else
                 {
                     panel2.Enabled = false;
-                    button7.Enabled = true;
+             //       button7.Enabled = true;
 
                 }
                 textBox3.Text = doc.Name;

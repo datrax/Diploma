@@ -96,7 +96,7 @@ namespace BLL
                 var admin = IsAdmin(userId);
                 return
                     mapper.Map<List<DocumentsDTO>>(
-                        unitOfWork.GetRepository<sectors_documents>().Find(a => a.SectorId == id && (!a.IsPrivate || userId == a.Author))).ToList();
+                        unitOfWork.GetRepository<sectors_documents>().Find(a => a.SectorId == id && (!a.IsPrivate || userId == a.Author || admin))).ToList();
             }
             if (type.Name == "ObjectsDTO")
             {
