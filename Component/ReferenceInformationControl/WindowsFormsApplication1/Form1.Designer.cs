@@ -28,38 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.userControl11 = new ReferenceInfoControl.UserControl1();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.userControl11 = new ObjectsReferenceInformationControl.UserControl1();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
-            // userControl11
-            // 
-            this.userControl11.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.userControl11.Location = new System.Drawing.Point(3, 35);
-            this.userControl11.Name = "userControl11";
-            this.userControl11.Size = new System.Drawing.Size(808, 546);
-            this.userControl11.TabIndex = 0;
-            this.userControl11.UserId = 0;
-            this.userControl11.Load += new System.EventHandler(this.userControl11_Load);
-            // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(534, 9);
+            this.numericUpDown1.Location = new System.Drawing.Point(428, 52);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
             this.numericUpDown1.TabIndex = 2;
-            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            // 
+            // userControl11
+            // 
+            this.userControl11.Location = new System.Drawing.Point(222, 52);
+            this.userControl11.Name = "userControl11";
+            this.userControl11.Size = new System.Drawing.Size(76, 22);
+            this.userControl11.TabIndex = 3;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(823, 582);
-            this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.userControl11);
+            this.Controls.Add(this.numericUpDown1);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
@@ -68,9 +62,8 @@
         }
 
         #endregion
-
-        private ReferenceInfoControl.UserControl1 userControl11;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private ObjectsReferenceInformationControl.UserControl1 userControl11;
     }
 }
 

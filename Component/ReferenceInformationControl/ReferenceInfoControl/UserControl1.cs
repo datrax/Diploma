@@ -21,8 +21,8 @@ namespace ReferenceInfoControl
         public Services services = new Services();
         public SelectedItem selectedItem = new SelectedItem();
         private int userid;
-        public EventHandler SetUser; 
-        
+        public EventHandler SetUser;
+
         public int UserId
         {
             get
@@ -32,9 +32,11 @@ namespace ReferenceInfoControl
                     SetUser(this, null);
                 }
                 return userid;
-      
+
             }
-            set { userid = value;
+            set
+            {
+                userid = value;
                 label1.Text = services.GetAuthor(value);
             }
         }
@@ -184,7 +186,7 @@ namespace ReferenceInfoControl
             tabControl1.SelectedIndex = 1;
             LoadDocuments();
             objectListView2.Refresh();
-
+            label2.Text = services.GetItemsPath(objectListView1.SelectedObject);
         }
 
         private void objectListView1_KeyDown(object sender, KeyEventArgs e)
@@ -225,7 +227,7 @@ namespace ReferenceInfoControl
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-            /*    using (var selectFileDialog = new OpenFileDialog()
+            using (var selectFileDialog = new OpenFileDialog()
             {
                 Multiselect = true,
             })
@@ -237,12 +239,12 @@ namespace ReferenceInfoControl
                         var fileName = selectFileDialog.FileNames[i];
                         var shortName = selectFileDialog.SafeFileNames[i];
                         var bytes = File.ReadAllBytes(fileName);
-                        services.AddFile(shortName, UserId, bytes, selectedItem.Id, selectedItem.item.GetType());
+                        services.AddFile(shortName, UserId, "1", bytes, selectedItem.Id, true, true, selectedItem.item.GetType());
                     }
                     LoadDocuments();
                 }
-            }*/
-            new AddFileForm(this).ShowDialog();
+            }
+            //     new AddFileForm(this).ShowDialog();
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -374,8 +376,8 @@ namespace ReferenceInfoControl
                     panel1.Visible = true;
                     button5.Enabled = true;
                 }
-       
-                if (services.UserCanEditData(UserId) || services.IsAdmin(UserId)|| doc.Author == UserId||doc.UsersCanEdit)
+
+                if (services.UserCanEditData(UserId) || services.IsAdmin(UserId) || doc.Author == UserId || doc.UsersCanEdit)
                 {
                     button7.Enabled = true;
 
@@ -384,7 +386,7 @@ namespace ReferenceInfoControl
                 {
                     button7.Enabled = false;
                 }
-                if (doc.BeingEdited&&doc.LastChangeUser != null && (doc.LastChangeUser.Value == UserId ))
+                if (doc.BeingEdited && doc.UserThatEdits != null && (doc.UserThatEdits.Value == UserId))
                 {
                     panel2.Enabled = true;
                     button7.Enabled = false;
@@ -409,6 +411,7 @@ namespace ReferenceInfoControl
             }
             else
             {
+                button5.Enabled = false;
                 panel2.Enabled = false;
                 panel1.Visible = false;
             }
@@ -418,7 +421,7 @@ namespace ReferenceInfoControl
         {
             var doc = objectListView2.SelectedObjects[0] as DocumentsDTO;
 
-                doc.Name = textBox3.Text;
+            doc.Name = textBox3.Text;
             doc.Version = textBox4.Text;
             if (radioButton1.Checked)
             {
@@ -446,13 +449,13 @@ namespace ReferenceInfoControl
         {
 
             var doc = objectListView2.SelectedObjects[0] as DocumentsDTO;
-            if (doc.BeingEdited && doc.LastChangeUser != null && (doc.LastChangeUser.Value != UserId))
+            if (doc.BeingEdited && doc.UserThatEdits != null && (doc.UserThatEdits.Value != UserId))
             {
-                MessageBox.Show("Файл уже редактируется");
+                MessageBox.Show("Файл уже редактируется пользователем: " + services.GetAuthor(doc.UserThatEdits.Value));
                 return;
             }
             doc.BeingEdited = true;
-            doc.LastChangeUser = UserId;
+            doc.UserThatEdits = UserId;
             services.EditDocument(doc, selectedItem.item.GetType());
             var path = selectedItem.item.GetType().Name + "/" + doc.id + "/";
             System.IO.Directory.CreateDirectory(Environment.CurrentDirectory + "/Edited/" + path.ToString());
@@ -466,13 +469,15 @@ namespace ReferenceInfoControl
 
         {
             var doc = objectListView2.SelectedObjects[0] as DocumentsDTO;
+            doc.UserThatEdits = null;
+            doc.LastChangeUser = UserId;
             var path = selectedItem.item.GetType().Name + "/" + doc.id + "/";
-            var data= File.ReadAllBytes(Environment.CurrentDirectory + "/Edited/" + path.ToString() + "/" + doc.Name);
+            var data = File.ReadAllBytes(Environment.CurrentDirectory + "/Edited/" + path.ToString() + "/" + doc.Name);
             File.Delete(Environment.CurrentDirectory + "/Edited/" + path.ToString() + "/" + doc.Name);
             System.IO.Directory.Delete(Environment.CurrentDirectory + "/Edited/" + path.ToString());
             panel2.Enabled = false;
             button7.Enabled = true;
-            services.SetNewDocData(doc, selectedItem.item.GetType(),data);
+            services.SetNewDocData(doc, selectedItem.item.GetType(), data);
             LoadDocuments();
         }
 
@@ -480,7 +485,7 @@ namespace ReferenceInfoControl
         {
             var doc = objectListView2.SelectedObjects[0] as DocumentsDTO;
             doc.BeingEdited = false;
-            //doc.LastChangeUser = UserId;
+            doc.UserThatEdits = null;
             services.EditDocument(doc, selectedItem.item.GetType());
             var path = selectedItem.item.GetType().Name + "/" + doc.id + "/";
             File.Delete(Environment.CurrentDirectory + "/Edited/" + path.ToString() + "/" + doc.Name);

@@ -38,6 +38,7 @@ namespace BLL.DTOModel
         [OLVColumn("Дата", TextAlign = HorizontalAlignment.Center)]
         public DateTime? date { get; set; }
 
+        public int? sector_id { get; set; }
         public override string ToString()
         {
             return String.Format("Id :{0}\n" +

@@ -12,14 +12,18 @@ namespace ReferenceInfoControl
 {
     public partial class Form1 : Form
     {
+        public EventHandler SetUser;
         public Form1()
         {
-            InitializeComponent();              
+            InitializeComponent();
+     
         }
 
         public void LoadTab(int number)
         {
+            this.userControl11.SetUser = SetUser;
             userControl11.LoadTab(number);
+
         }
     }
 }

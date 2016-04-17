@@ -19,25 +19,13 @@ namespace WindowsFormsApplication1
         private IUnitOfWork unitOfWork;
         public Form1()
         {
-            unitOfWork = new UnitOfWork<ModelContext>();
             InitializeComponent();
-       //     Generator.GenerateColumns(this.objectListView1, typeof(objects), true);
-            unitOfWork.GetRepository<objects>().GetAll().ToList();
-            userControl11.SetUser+= delegate(object sender, EventArgs args)
-            {
-               (sender as UserControl1).UserId= Convert.ToInt32(numericUpDown1.Value);
-            };
+            userControl11.SetUser += setUser;
         }
-
-        public void userControl11_Load(object sender, EventArgs e)
+        public void setUser(object sender, EventArgs e)
         {
-
+            (sender as UserControl1).UserId = Convert.ToInt32(numericUpDown1.Value);
         }
 
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-        {
-
-   
-        }
     }
 }

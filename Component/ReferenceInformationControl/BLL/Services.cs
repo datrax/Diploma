@@ -37,7 +37,35 @@ namespace BLL
             var mapper = config.CreateMapper();
             return mapper.Map<List<WellsDTO>>(unitOfWork.GetRepository<wells>().GetAll().ToList());
         }
+        public  string GetItemsPath(object rowObject)
+        {
+        
+            if (rowObject is WellsDTO)
+            {
+                string ans = "";
+                var t= (rowObject as WellsDTO);
+                ans+=unitOfWork.GetRepository<sectors>().GetById(t.sector_id.Value).objects.name;
+                ans += "/"+t.sector_name+"/"+t.char_name;
+                return ans;
+            }
 
+            if (rowObject is SectorsDTO)
+            {
+                string ans = "";
+                var t = (rowObject as SectorsDTO);
+                ans +=  t.name+ "/" + t.objectName;
+                return ans;
+            }
+
+            if (rowObject is ObjectsDTO)
+            {
+                string ans = "";
+                var t = (rowObject as ObjectsDTO);
+                ans += t.name;
+                return ans;
+            }
+            return "";
+        }
         public static string GetItemAsString(object rowObject)
         {
 
@@ -168,6 +196,7 @@ namespace BLL
                 docum.UsersCanEdit = doc.UsersCanEdit;
                 docum.LastChangeUser = doc.LastChangeUser;
                 docum.BeingEdited = doc.BeingEdited;
+                docum.UserThatEdits = doc.UserThatEdits;
                 unitOfWork.GetRepository<sectors_documents>().Update(docum);
                 unitOfWork.Save();
             }
@@ -180,6 +209,7 @@ namespace BLL
                 docum.UsersCanEdit = doc.UsersCanEdit;
                 docum.LastChangeUser = doc.LastChangeUser;
                 docum.BeingEdited = doc.BeingEdited;
+                docum.UserThatEdits = doc.UserThatEdits;
                 unitOfWork.GetRepository<objects_documents>().Update(docum);
                 unitOfWork.Save();
             }
@@ -192,6 +222,7 @@ namespace BLL
                 docum.UsersCanEdit = doc.UsersCanEdit;
                 docum.LastChangeUser = doc.LastChangeUser;
                 docum.BeingEdited = doc.BeingEdited;
+                docum.UserThatEdits = doc.UserThatEdits;
                 unitOfWork.GetRepository<wells_documents>().Update(docum);
                 unitOfWork.Save();
             }
@@ -246,6 +277,8 @@ namespace BLL
                 var docum = unitOfWork.GetRepository<sectors_documents>().GetById(doc.id);
                 docum.Data = data;
                 docum.BeingEdited = false;
+                docum.UserThatEdits = doc.UserThatEdits;
+                docum.LastChangeUser = doc.LastChangeUser;
                 unitOfWork.GetRepository<sectors_documents>().Update(docum);
                 unitOfWork.Save();
             }
@@ -254,6 +287,8 @@ namespace BLL
                 var docum = unitOfWork.GetRepository<objects_documents>().GetById(doc.id);
                 docum.Data = data;
                 docum.BeingEdited = false;
+                docum.UserThatEdits = doc.UserThatEdits;
+                docum.LastChangeUser = doc.LastChangeUser;
                 unitOfWork.GetRepository<objects_documents>().Update(docum);
                 unitOfWork.Save();
             }
@@ -262,6 +297,8 @@ namespace BLL
                 var docum = unitOfWork.GetRepository<wells_documents>().GetById(doc.id);
                 docum.Data = data;
                 docum.BeingEdited = false;
+                docum.UserThatEdits = doc.UserThatEdits;
+                docum.LastChangeUser = doc.LastChangeUser;
                 unitOfWork.GetRepository<wells_documents>().Update(docum);
                 unitOfWork.Save();
             }

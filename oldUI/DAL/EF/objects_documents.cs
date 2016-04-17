@@ -33,10 +33,14 @@ namespace DAL.EF
 
         public int? LastChangeUser { get; set; }
 
+        public int? UserThatEdits { get; set; }
+
         public virtual objects objects { get; set; }
 
         public virtual performers performers { get; set; }
 
         public virtual performers performers1 { get; set; }
+
+        public virtual performers performers2 { get; set; }
     }
 }

@@ -27,6 +27,7 @@ namespace BLL.DTOModel
         public bool IsPrivate { get; set; }
         public DateTime? dateTime { get; set; }
         public int? LastChangeUser { get; set; }
+        public int? UserThatEdits { get; set; }
         public string LastChangeUserName { get; set; }
         public string Version { get; set; }
     }
