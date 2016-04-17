@@ -23,17 +23,21 @@ namespace WindowsFormsApplication1
             InitializeComponent();
        //     Generator.GenerateColumns(this.objectListView1, typeof(objects), true);
             unitOfWork.GetRepository<objects>().GetAll().ToList();
+            userControl11.SetUser+= delegate(object sender, EventArgs args)
+            {
+               (sender as UserControl1).UserId= Convert.ToInt32(numericUpDown1.Value);
+            };
         }
 
         public void userControl11_Load(object sender, EventArgs e)
         {
-            (sender as UserControl1).UserId = 4;
+
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
 
-           userControl11.UserId = Convert.ToInt32(numericUpDown1.Value);
+   
         }
     }
 }

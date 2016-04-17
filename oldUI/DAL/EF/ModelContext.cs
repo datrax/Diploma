@@ -39,6 +39,11 @@ namespace DAL.EF
                 .HasForeignKey(e => e.Author);
 
             modelBuilder.Entity<performers>()
+                .HasMany(e => e.objects_documents1)
+                .WithOptional(e => e.performers1)
+                .HasForeignKey(e => e.LastChangeUser);
+
+            modelBuilder.Entity<performers>()
                 .HasMany(e => e.performers_roles)
                 .WithRequired(e => e.performers)
                 .HasForeignKey(e => e.performer_id)
@@ -50,9 +55,19 @@ namespace DAL.EF
                 .HasForeignKey(e => e.Author);
 
             modelBuilder.Entity<performers>()
+                .HasMany(e => e.sectors_documents1)
+                .WithOptional(e => e.performers1)
+                .HasForeignKey(e => e.LastChangeUser);
+
+            modelBuilder.Entity<performers>()
                 .HasMany(e => e.wells_documents)
                 .WithOptional(e => e.performers)
                 .HasForeignKey(e => e.Author);
+
+            modelBuilder.Entity<performers>()
+                .HasMany(e => e.wells_documents1)
+                .WithOptional(e => e.performers1)
+                .HasForeignKey(e => e.LastChangeUser);
 
             modelBuilder.Entity<sectors>()
                 .HasMany(e => e.sectors_documents)

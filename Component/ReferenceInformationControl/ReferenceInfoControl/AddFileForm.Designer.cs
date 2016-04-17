@@ -43,7 +43,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
+            this.button1.Text = "Сохранить";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -68,10 +68,10 @@
             this.radioButton1.Checked = true;
             this.radioButton1.Location = new System.Drawing.Point(85, 123);
             this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(108, 17);
+            this.radioButton1.Size = new System.Drawing.Size(93, 17);
             this.radioButton1.TabIndex = 3;
             this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Общедоступный";
+            this.radioButton1.Text = "Изменяемый";
             this.radioButton1.UseVisualStyleBackColor = true;
             this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 

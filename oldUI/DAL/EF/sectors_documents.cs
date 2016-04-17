@@ -31,7 +31,11 @@ namespace DAL.EF
 
         public DateTime? DateTime { get; set; }
 
+        public int? LastChangeUser { get; set; }
+
         public virtual performers performers { get; set; }
+
+        public virtual performers performers1 { get; set; }
 
         public virtual sectors sectors { get; set; }
     }

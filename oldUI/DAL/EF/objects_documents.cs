@@ -28,9 +28,15 @@ namespace DAL.EF
 
         [Required]
         public string Version { get; set; }
+
         public DateTime? DateTime { get; set; }
+
+        public int? LastChangeUser { get; set; }
+
         public virtual objects objects { get; set; }
 
         public virtual performers performers { get; set; }
+
+        public virtual performers performers1 { get; set; }
     }
 }

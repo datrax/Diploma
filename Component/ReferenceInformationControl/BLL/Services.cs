@@ -54,19 +54,21 @@ namespace BLL
             return "";
         }
 
-        public IEnumerable<DocumentsDTO> GetDocuments(int id, Type type)
+        public IEnumerable<DocumentsDTO> GetDocuments(int id, Type type,int userId)
         {
+          
             if (type.Name == "SectorsDTO")
             {
                 var config =
                     new MapperConfiguration(
                         cfg =>
                             cfg.CreateMap<sectors_documents, DocumentsDTO>()
-                                .ForMember(a => a.AuthorName, o => o.MapFrom(s => GetAuthor(s.Author.Value))).ForMember(a => a.ParentId, o => o.MapFrom(s => s.SectorId)));
+                                .ForMember(a => a.AuthorName, o => o.MapFrom(s => GetAuthor(s.Author.Value))).ForMember(a => a.ParentId, o => o.MapFrom(s => s.SectorId)).ForMember(a => a.LastChangeUserName, o => o.MapFrom(s => s.LastChangeUser!=null?GetAuthor(s.LastChangeUser.Value):"")));
                 var mapper = config.CreateMapper();
+                var admin = IsAdmin(userId);
                 return
                     mapper.Map<List<DocumentsDTO>>(
-                        unitOfWork.GetRepository<sectors_documents>().Find(a => a.SectorId == id)).ToList();
+                        unitOfWork.GetRepository<sectors_documents>().Find(a => a.SectorId == id && (!a.IsPrivate || userId == a.Author))).ToList();
             }
             if (type.Name == "ObjectsDTO")
             {
@@ -74,11 +76,12 @@ namespace BLL
                     new MapperConfiguration(
                         cfg =>
                             cfg.CreateMap<objects_documents, DocumentsDTO>()
-                                .ForMember(a => a.AuthorName, o => o.MapFrom(s => GetAuthor(s.Author.Value))).ForMember(a => a.ParentId, o => o.MapFrom(s => s.ObjectId)));
+                                .ForMember(a => a.AuthorName, o => o.MapFrom(s => GetAuthor(s.Author.Value))).ForMember(a => a.ParentId, o => o.MapFrom(s => s.ObjectId)).ForMember(a => a.LastChangeUserName, o => o.MapFrom(s => s.LastChangeUser != null ? GetAuthor(s.LastChangeUser.Value) : "")));
                 var mapper = config.CreateMapper();
+                var admin = IsAdmin(userId);
                 return
                     mapper.Map<List<DocumentsDTO>>(
-                        unitOfWork.GetRepository<objects_documents>().Find(a => a.ObjectId == id)).ToList();
+                        unitOfWork.GetRepository<objects_documents>().Find(a => a.ObjectId == id&&(!a.IsPrivate || userId == a.Author || admin))).ToList();
             }
             if (type.Name == "WellsDTO")
             {
@@ -86,11 +89,12 @@ namespace BLL
                     new MapperConfiguration(
                         cfg =>
                             cfg.CreateMap<wells_documents, DocumentsDTO>()
-                                .ForMember(a => a.AuthorName, o => o.MapFrom(s => GetAuthor(s.Author.Value))).ForMember(a => a.ParentId, o => o.MapFrom(s => s.WellId)));
+                                .ForMember(a => a.AuthorName, o => o.MapFrom(s => GetAuthor(s.Author.Value))).ForMember(a => a.ParentId, o => o.MapFrom(s => s.WellId)).ForMember(a => a.LastChangeUserName, o => o.MapFrom(s => s.LastChangeUser != null ? GetAuthor(s.LastChangeUser.Value) : "")));
                 var mapper = config.CreateMapper();
+                var admin = IsAdmin(userId);
                 return
                     mapper.Map<List<DocumentsDTO>>(
-                        unitOfWork.GetRepository<wells_documents>().Find(a => a.WellId == id)).ToList();
+                        unitOfWork.GetRepository<wells_documents>().Find(a => a.WellId == id && (!a.IsPrivate || userId == a.Author || admin))).ToList();
             }
             return null;
         }
@@ -153,6 +157,46 @@ namespace BLL
             }
         }
 
+        public void EditDocument(DocumentsDTO doc, Type type)
+        {
+            if (type.Name == "SectorsDTO")
+            {
+                var docum = unitOfWork.GetRepository<sectors_documents>().GetById(doc.id);
+                docum.Name = doc.Name;
+                docum.Version = doc.Version;
+                docum.IsPrivate = doc.IsPrivate;
+                docum.UsersCanEdit = doc.UsersCanEdit;
+                docum.LastChangeUser = doc.LastChangeUser;
+                docum.BeingEdited = doc.BeingEdited;
+                unitOfWork.GetRepository<sectors_documents>().Update(docum);
+                unitOfWork.Save();
+            }
+            if (type.Name == "ObjectsDTO")
+            {
+                var docum = unitOfWork.GetRepository<objects_documents>().GetById(doc.id);
+                docum.Name = doc.Name;
+                docum.Version = doc.Version;
+                docum.IsPrivate = doc.IsPrivate;
+                docum.UsersCanEdit = doc.UsersCanEdit;
+                docum.LastChangeUser = doc.LastChangeUser;
+                docum.BeingEdited = doc.BeingEdited;
+                unitOfWork.GetRepository<objects_documents>().Update(docum);
+                unitOfWork.Save();
+            }
+            if (type.Name == "WellsDTO")
+            {
+                var docum = unitOfWork.GetRepository<wells_documents>().GetById(doc.id);
+                docum.Name = doc.Name;
+                docum.Version = doc.Version;
+                docum.IsPrivate = doc.IsPrivate;
+                docum.UsersCanEdit = doc.UsersCanEdit;
+                docum.LastChangeUser = doc.LastChangeUser;
+                docum.BeingEdited = doc.BeingEdited;
+                unitOfWork.GetRepository<wells_documents>().Update(docum);
+                unitOfWork.Save();
+            }
+        }
+
         public string GetAuthor(int id)
         {
             return unitOfWork.GetRepository<performers>().GetById(id).fio;
@@ -193,6 +237,46 @@ namespace BLL
                 return unitOfWork.GetRepository<wells_documents>().GetById(id).Data;
             }
             return null;
+        }
+
+        public void SetNewDocData(DocumentsDTO doc, Type type,byte[] data)
+        {
+            if (type.Name == "SectorsDTO")
+            {
+                var docum = unitOfWork.GetRepository<sectors_documents>().GetById(doc.id);
+                docum.Data = data;
+                docum.BeingEdited = false;
+                unitOfWork.GetRepository<sectors_documents>().Update(docum);
+                unitOfWork.Save();
+            }
+            if (type.Name == "ObjectsDTO")
+            {
+                var docum = unitOfWork.GetRepository<objects_documents>().GetById(doc.id);
+                docum.Data = data;
+                docum.BeingEdited = false;
+                unitOfWork.GetRepository<objects_documents>().Update(docum);
+                unitOfWork.Save();
+            }
+            if (type.Name == "WellsDTO")
+            {
+                var docum = unitOfWork.GetRepository<wells_documents>().GetById(doc.id);
+                docum.Data = data;
+                docum.BeingEdited = false;
+                unitOfWork.GetRepository<wells_documents>().Update(docum);
+                unitOfWork.Save();
+            }
+        }
+        public bool IsAdmin(int id)
+        {
+            if (unitOfWork.GetRepository<performers>().GetById(id).performers_roles.Any(a => a.role_id == 0))
+                return true;
+            return false;
+        }
+        public bool UserCanEditData(int id)
+        {
+            if (unitOfWork.GetRepository<performers>().GetById(id).performers_roles.Any(a => a.role_id == 1))
+                return true;
+            return false;
         }
     }
 }

@@ -20,10 +20,31 @@ namespace ReferenceInfoControl
     {
         public Services services = new Services();
         public SelectedItem selectedItem = new SelectedItem();
-        public int UserId { get; set; }
+        private int userid;
+        public EventHandler SetUser; 
+        
+        public int UserId
+        {
+            get
+            {
+                if (SetUser != null)
+                {
+                    SetUser(this, null);
+                }
+                return userid;
+      
+            }
+            set { userid = value;
+                label1.Text = services.GetAuthor(value);
+            }
+        }
+
         public UserControl1()
         {
+            if (DesignMode)
+                return;
             InitializeComponent();
+
         }
 
         public void LoadTab(int number)
@@ -41,6 +62,7 @@ namespace ReferenceInfoControl
                 button3_Click(wellsButton, null);
             }
         }
+
         private void UserControl1_Load(object sender, EventArgs e)
         {
             if (DesignMode)
@@ -77,7 +99,9 @@ namespace ReferenceInfoControl
                 if (ob.Name.EndsWith(".docx")) return 3;
                 if (ob.Name.EndsWith(".txt")) return 1;
                 if (ob.Name.EndsWith(".pdf")) return 5;
-                if (ob.Name.EndsWith(".jpeg") || ob.Name.EndsWith(".gif") || ob.Name.EndsWith(".png") || ob.Name.EndsWith(".jpg")) return 4;
+                if (ob.Name.EndsWith(".jpeg") || ob.Name.EndsWith(".gif") || ob.Name.EndsWith(".png") ||
+                    ob.Name.EndsWith(".jpg"))
+                    return 4;
                 if (ob.Name.EndsWith(".mp3") || ob.Name.EndsWith(".wav") || ob.Name.EndsWith(".flac")) return 7;
                 if (ob.Name.EndsWith(".avi") || ob.Name.EndsWith(".mp4") || ob.Name.EndsWith(".flac")) return 6;
                 return 0;
@@ -86,9 +110,11 @@ namespace ReferenceInfoControl
             objectListView2.AllColumns[1].FillsFreeSpace = true;
             objectListView2.AllColumns[2].FillsFreeSpace = true;
             objectListView2.AllColumns[3].FillsFreeSpace = true;
+            objectListView2.AllColumns[4].FillsFreeSpace = true;
             LoadTab(1);
         }
-        void olv_CellToolTipShowing(object sender, ToolTipShowingEventArgs e)
+
+        private void olv_CellToolTipShowing(object sender, ToolTipShowingEventArgs e)
         {
             if (objectListView1.SelectedItem != null &&
                 objectListView1.HotRowIndex == objectListView1.SelectedItem.Index)
@@ -102,7 +128,7 @@ namespace ReferenceInfoControl
             objectListView2.CellToolTip.Font = new Font("Tahoma", 14);
         }
 
-        void olv_CellToolTipShowing2(object sender, ToolTipShowingEventArgs e)
+        private void olv_CellToolTipShowing2(object sender, ToolTipShowingEventArgs e)
         {
             if (objectListView2.SelectedObjects.Count > 1)
                 return;
@@ -110,6 +136,7 @@ namespace ReferenceInfoControl
             objectListView1.CellToolTip.IsBalloon = true;
             objectListView1.CellToolTip.Font = new Font("Tahoma", 14);
         }
+
         private void button1_Click(object sender, EventArgs e)
         {
             textBox1.Text = "";
@@ -159,22 +186,23 @@ namespace ReferenceInfoControl
             objectListView2.Refresh();
 
         }
+
         private void objectListView1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
                 objectListView1_MouseDoubleClick(objectListView1, null);
         }
+
         public void LoadDocuments()
         {
-            objectListView2.SetObjects(services.GetDocuments(selectedItem.Id, selectedItem.item.GetType()));
-            /*        if (objectListView2.OLVGroups != null
-                    )
-                        for (int i = 0; i < objectListView2.OLVGroups.Count; i++)
-                        {
-                            objectListView2.OLVGroups[i].Collapsed = true;
-                        }*/
+            objectListView2.SetObjects(services.GetDocuments(selectedItem.Id, selectedItem.item.GetType(), UserId));
+            //for (int i = 0; i < objectListView2.Items.Count; i++)
+            //{
+            //    objectListView2.Items[i].ForeColor=Color.Blue;
+            //}            
             objectListView2.Refresh();
         }
+
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty((sender as TextBox).Text))
@@ -197,7 +225,7 @@ namespace ReferenceInfoControl
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-        /*    using (var selectFileDialog = new OpenFileDialog()
+            /*    using (var selectFileDialog = new OpenFileDialog()
             {
                 Multiselect = true,
             })
@@ -238,12 +266,12 @@ namespace ReferenceInfoControl
             {
                 var doc = objectListView2.SelectedObjects[i] as DocumentsDTO;
                 var guid = Guid.NewGuid();
-                System.IO.Directory.CreateDirectory(Environment.CurrentDirectory + "/Opened/" +guid.ToString());
+                System.IO.Directory.CreateDirectory(Environment.CurrentDirectory + "/Opened/" + guid.ToString());
                 var data = services.GetDocumentByid(doc.id, selectedItem.item.GetType());
-                File.WriteAllBytes(Environment.CurrentDirectory + "/Opened/" +guid.ToString()+"/"+doc.Name,data);
-                Process.Start(Environment.CurrentDirectory+"/Opened/" + guid.ToString() + "/" + doc.Name); 
+                File.WriteAllBytes(Environment.CurrentDirectory + "/Opened/" + guid.ToString() + "/" + doc.Name, data);
+                Process.Start(Environment.CurrentDirectory + "/Opened/" + guid.ToString() + "/" + doc.Name);
             }
-           // LoadDocuments();
+            // LoadDocuments();
         }
 
         private void objectListView2_ColumnClick(object sender, ColumnClickEventArgs e)
@@ -269,7 +297,7 @@ namespace ReferenceInfoControl
 
         private void tabControl1_KeyDown(object sender, KeyEventArgs e)
         {
-            if ((e.KeyCode == Keys.Left || e.KeyCode == Keys.Right) )
+            if ((e.KeyCode == Keys.Left || e.KeyCode == Keys.Right))
             {
                 if (tabControl1.SelectedIndex == 1)
                     tabControl1.SelectedIndex = 1;
@@ -278,7 +306,7 @@ namespace ReferenceInfoControl
                     e.Handled = true;
                 }
             }
-            if (e.KeyCode == Keys.Back&&objectListView2.Focused)
+            if (e.KeyCode == Keys.Back && objectListView2.Focused)
             {
                 tabControl1.SelectedIndex = 0;
             }
@@ -295,7 +323,7 @@ namespace ReferenceInfoControl
             {
                 filters.Add(TextMatchFilter.Contains(this.objectListView2, word));
             }
-            this.objectListView2.ModelFilter = new CompositeAllFilter(filters);          
+            this.objectListView2.ModelFilter = new CompositeAllFilter(filters);
             objectListView2.Refresh();
         }
 
@@ -311,6 +339,155 @@ namespace ReferenceInfoControl
                 objectListView2.View = View.Details;
             }
             objectListView2.Refresh();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            List<int> newDocs = new List<int>();
+            for (int i = 0; i < objectListView2.SelectedItems.Count; i++)
+            {
+                var doc = objectListView2.SelectedObjects[i] as DocumentsDTO;
+                var data = services.GetDocumentByid(doc.id, selectedItem.item.GetType());
+                services.AddFile(doc.Name, UserId, doc.Version + "_Cloned", data, selectedItem.Id, true, true, selectedItem.item.GetType());
+                LoadDocuments();
+            }
+        }
+
+        private void objectListView2_SelectionChanged(object sender, EventArgs e)
+        {
+            if (objectListView2.SelectedObjects.Count == 0)
+            {
+                panel1.Visible = false;
+                panel2.Enabled = false;
+            }
+            else
+                if (objectListView2.SelectedObjects.Count == 1)
+            {
+                var doc = objectListView2.SelectedObjects[0] as DocumentsDTO;
+                if (doc.Author != UserId && !services.IsAdmin(UserId))
+                {
+                    panel1.Visible = false;
+                    button5.Enabled = false;
+                }
+                else
+                {
+                    panel1.Visible = true;
+                    button5.Enabled = true;
+                }
+       
+                if (services.UserCanEditData(UserId) || services.IsAdmin(UserId)|| doc.Author == UserId||doc.UsersCanEdit)
+                {
+                    button7.Enabled = true;
+
+                }
+                else
+                {
+                    button7.Enabled = false;
+                }
+                if (doc.BeingEdited&&doc.LastChangeUser != null && (doc.LastChangeUser.Value == UserId ))
+                {
+                    panel2.Enabled = true;
+                    button7.Enabled = false;
+                }
+                else
+                {
+                    panel2.Enabled = false;
+                    button7.Enabled = true;
+
+                }
+                textBox3.Text = doc.Name;
+                textBox4.Text = doc.Version;
+                radioButton2.Checked = true;
+                if (doc.UsersCanEdit)
+                {
+                    radioButton1.Checked = true;
+                }
+                if (doc.IsPrivate)
+                {
+                    radioButton3.Checked = true;
+                }
+            }
+            else
+            {
+                panel2.Enabled = false;
+                panel1.Visible = false;
+            }
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            var doc = objectListView2.SelectedObjects[0] as DocumentsDTO;
+
+                doc.Name = textBox3.Text;
+            doc.Version = textBox4.Text;
+            if (radioButton1.Checked)
+            {
+                doc.IsPrivate = false;
+                doc.UsersCanEdit = true;
+            }
+            else
+           if (radioButton2.Checked)
+            {
+                doc.IsPrivate = false;
+                doc.UsersCanEdit = false;
+            }
+            else
+           if (radioButton3.Checked)
+            {
+                doc.IsPrivate = true;
+                doc.UsersCanEdit = true;
+            }
+            services.EditDocument(doc, selectedItem.item.GetType());
+            panel1.Visible = false;
+            LoadDocuments();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+
+            var doc = objectListView2.SelectedObjects[0] as DocumentsDTO;
+            if (doc.BeingEdited && doc.LastChangeUser != null && (doc.LastChangeUser.Value != UserId))
+            {
+                MessageBox.Show("Файл уже редактируется");
+                return;
+            }
+            doc.BeingEdited = true;
+            doc.LastChangeUser = UserId;
+            services.EditDocument(doc, selectedItem.item.GetType());
+            var path = selectedItem.item.GetType().Name + "/" + doc.id + "/";
+            System.IO.Directory.CreateDirectory(Environment.CurrentDirectory + "/Edited/" + path.ToString());
+            var data = services.GetDocumentByid(doc.id, selectedItem.item.GetType());
+            File.WriteAllBytes(Environment.CurrentDirectory + "/Edited/" + path.ToString() + "/" + doc.Name, data);
+            Process.Start(Environment.CurrentDirectory + "/Edited/" + path.ToString() + "/" + doc.Name);
+            button7.Enabled = false;
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+
+        {
+            var doc = objectListView2.SelectedObjects[0] as DocumentsDTO;
+            var path = selectedItem.item.GetType().Name + "/" + doc.id + "/";
+            var data= File.ReadAllBytes(Environment.CurrentDirectory + "/Edited/" + path.ToString() + "/" + doc.Name);
+            File.Delete(Environment.CurrentDirectory + "/Edited/" + path.ToString() + "/" + doc.Name);
+            System.IO.Directory.Delete(Environment.CurrentDirectory + "/Edited/" + path.ToString());
+            panel2.Enabled = false;
+            button7.Enabled = true;
+            services.SetNewDocData(doc, selectedItem.item.GetType(),data);
+            LoadDocuments();
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            var doc = objectListView2.SelectedObjects[0] as DocumentsDTO;
+            doc.BeingEdited = false;
+            //doc.LastChangeUser = UserId;
+            services.EditDocument(doc, selectedItem.item.GetType());
+            var path = selectedItem.item.GetType().Name + "/" + doc.id + "/";
+            File.Delete(Environment.CurrentDirectory + "/Edited/" + path.ToString() + "/" + doc.Name);
+            System.IO.Directory.Delete(Environment.CurrentDirectory + "/Edited/" + path.ToString());
+            panel2.Enabled = false;
+            button7.Enabled = true;
+            LoadDocuments();
         }
     }
 }
