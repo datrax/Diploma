@@ -18,7 +18,7 @@ namespace ObjectsReferenceInformationControl
         private string myText;
         private int _typeNumber;
         private int? id;
-        [Category("Gradient"), Description("Початковий колір заповнення"), DefaultValue("Объекты")]
+        [Category("important"), Description("Id объекта"), DefaultValue("Объекты")]
         public int? Id
         {
             get
@@ -28,7 +28,7 @@ namespace ObjectsReferenceInformationControl
             set { id = value; }
         }
 
-        [Category("Gradient"), Description("Початковий колір заповнення"), DefaultValue("Объекты")]
+        [Category("important"), Description("Текст"), DefaultValue("Объекты")]
         public string MyText
         {
             get { return myText; }
@@ -42,7 +42,7 @@ namespace ObjectsReferenceInformationControl
 
         public enum Types : int { Объекты=0,Участки = 1, Скважины = 2, }
 
-        [Category("Gradient"), Description("Початковий колір заповнення"), DefaultValue(Types.Объекты)]
+        [Category("important"), Description("Тип объекта"), DefaultValue(Types.Объекты)]
         public Types Type
         {
             get { return type; }
@@ -62,7 +62,7 @@ namespace ObjectsReferenceInformationControl
         private Types type;
 
          EventHandler setUser;
-        [Category("Search"), Description("Called when the first input of specific word found")]
+        [Category("important"), Description("Событие которое вызывается для того чтобы узнать id пользователя")]
         public event EventHandler SetUser
         {
             add { setUser += value; }
@@ -79,6 +79,7 @@ namespace ObjectsReferenceInformationControl
         }
 
         /// <summary>
+        /// Get List of next items:
         /// Use 1 for Объекты, 2 for Участки, 3 for Скважины
         /// </summary>
         /// <param name="_typeNumber"></param>
@@ -92,6 +93,13 @@ namespace ObjectsReferenceInformationControl
                 type = Types.Скважины;            
             MyText = text;
         }
+        /// <summary>
+        /// Get List of document of item such as:
+        /// Use 1 for Объекты, 2 for Участки, 3 for Скважины id - id of chosen item
+        /// </summary>
+        /// <param name="_typeNumber"></param>
+        /// <param name="id"></param>
+        /// <param name="text"></param>
         public SpecificReferenceInformation(int _typeNumber, int id,string text) : this(_typeNumber,text)
         {
             this._typeNumber = _typeNumber;

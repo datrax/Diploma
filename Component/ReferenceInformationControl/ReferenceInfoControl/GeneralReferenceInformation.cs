@@ -54,6 +54,15 @@ namespace ReferenceInfoControl
 
         public void LoadDocs(int mode,int id)
         {
+            if (SetUser != null)
+            {
+                SetUser(this, null);
+            }
+            if (userid == -1)
+            {
+                MessageBox.Show("Не удалось получить данные от пользователя\n(Рекомендуеться использовать событие SetUserId для устаовки)");
+                return;
+            }
             LoadTab(mode);
             if (mode == 1)
             {
