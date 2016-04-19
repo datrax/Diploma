@@ -18,7 +18,7 @@ namespace ReferenceInfoControl
 {
     public partial class UserControl1 : UserControl
     {
-        public Services services = new Services();
+        public Services services;
         public SelectedItem selectedItem = new SelectedItem();
         private int userid;
         public EventHandler SetUser;
@@ -44,8 +44,9 @@ namespace ReferenceInfoControl
         public UserControl1()
         {
             if (DesignMode)
-                return;
+                return;            
             InitializeComponent();
+            services = new Services();
 
         }
 
@@ -218,6 +219,7 @@ namespace ReferenceInfoControl
         private void button1_Click_1(object sender, EventArgs e)
         {
             tabControl1.SelectedIndex = 0;
+            panel1.Visible = false;
         }
 
         private void objectListView2_MouseDoubleClick(object sender, MouseEventArgs e)

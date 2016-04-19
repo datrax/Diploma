@@ -30,6 +30,7 @@
         {
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.userControl11 = new ObjectsReferenceInformationControl.UserControl1();
+            this.userControl12 = new ReferenceInfoControl.UserControl1();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -47,11 +48,20 @@
             this.userControl11.Size = new System.Drawing.Size(76, 22);
             this.userControl11.TabIndex = 3;
             // 
+            // userControl12
+            // 
+            this.userControl12.Location = new System.Drawing.Point(21, 80);
+            this.userControl12.Name = "userControl12";
+            this.userControl12.Size = new System.Drawing.Size(814, 534);
+            this.userControl12.TabIndex = 4;
+            this.userControl12.UserId = 0;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(823, 582);
+            this.Controls.Add(this.userControl12);
             this.Controls.Add(this.userControl11);
             this.Controls.Add(this.numericUpDown1);
             this.Name = "Form1";
@@ -64,6 +74,7 @@
         #endregion
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private ObjectsReferenceInformationControl.UserControl1 userControl11;
+        private ReferenceInfoControl.UserControl1 userControl12;
     }
 }
 
