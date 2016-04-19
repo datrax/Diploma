@@ -12,12 +12,20 @@ namespace WindowsFormsApplication1
         public Form1()
         {
             InitializeComponent();
-            userControl11.SetUser += setUser;
+            for (int i = 0; i < 4; i++)
+            {
+                var p = new SpecificReferenceInformation(1, i+1, "" + i);
+                p.Location=new Point(15,i*30+5);
+                p.SetUser += setUser;
+                this.Controls.Add(p);
+            }
+           
         }
         public void setUser(object sender, EventArgs e)
         {
             (sender as GeneralReferenceInformation).UserId = Convert.ToInt32(numericUpDown1.Value);
         }
+
 
     }
 }
