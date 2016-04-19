@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.userControl11 = new ReferenceInfoControl.UserControl1();
+            this.userControl11 = new ReferenceInfoControl.GeneralReferenceInformation();
             this.SuspendLayout();
             // 
             // userControl11
@@ -56,6 +56,6 @@
 
         #endregion
 
-        private UserControl1 userControl11;
+        private GeneralReferenceInformation userControl11;
     }
 }

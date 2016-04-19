@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferenceInfoControl", "Ref
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{7E64D15D-6B7F-4C46-8175-EDEC1D8F3192}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectsReferenceInformationControl", "ObjectsReferenceInformationControl\ObjectsReferenceInformationControl.csproj", "{C2B70D1D-1A91-4C1F-A381-AF1C71C96DEB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecificReferenceInformationControl", "ObjectsReferenceInformationControl\SpecificReferenceInformationControl.csproj", "{C2B70D1D-1A91-4C1F-A381-AF1C71C96DEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

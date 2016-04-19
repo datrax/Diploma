@@ -18,7 +18,12 @@ namespace ReferenceInfoControl
             InitializeComponent();
      
         }
+        public void LoadDoc(int mode,int id)
+        {
+            this.userControl11.SetUser = SetUser;
+            userControl11.LoadDocs(mode,id);
 
+        }
         public void LoadTab(int number)
         {
             this.userControl11.SetUser = SetUser;

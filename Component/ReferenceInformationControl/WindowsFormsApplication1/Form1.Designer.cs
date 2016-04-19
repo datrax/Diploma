@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.userControl11 = new ObjectsReferenceInformationControl.UserControl1();
-            this.userControl12 = new ReferenceInfoControl.UserControl1();
+            this.userControl12 = new ObjectsReferenceInformationControl.SpecificReferenceInformation();
+            this.userControl11 = new ObjectsReferenceInformationControl.SpecificReferenceInformation();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -41,20 +41,25 @@
             this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
             this.numericUpDown1.TabIndex = 2;
             // 
-            // userControl11
-            // 
-            this.userControl11.Location = new System.Drawing.Point(222, 52);
-            this.userControl11.Name = "userControl11";
-            this.userControl11.Size = new System.Drawing.Size(76, 22);
-            this.userControl11.TabIndex = 3;
-            // 
             // userControl12
             // 
-            this.userControl12.Location = new System.Drawing.Point(21, 80);
+            this.userControl12.Id = null;
+            this.userControl12.Location = new System.Drawing.Point(213, 43);
+            this.userControl12.MyText = "Скважины";
             this.userControl12.Name = "userControl12";
-            this.userControl12.Size = new System.Drawing.Size(814, 534);
+            this.userControl12.Size = new System.Drawing.Size(123, 29);
             this.userControl12.TabIndex = 4;
-            this.userControl12.UserId = 0;
+            this.userControl12.Type = ObjectsReferenceInformationControl.SpecificReferenceInformation.Types.Скважины;
+            // 
+            // userControl11
+            // 
+            this.userControl11.Id = null;
+            this.userControl11.Location = new System.Drawing.Point(54, 33);
+            this.userControl11.MyText = "Участки";
+            this.userControl11.Name = "userControl11";
+            this.userControl11.Size = new System.Drawing.Size(104, 39);
+            this.userControl11.TabIndex = 3;
+            this.userControl11.Type = ObjectsReferenceInformationControl.SpecificReferenceInformation.Types.Участки;
             // 
             // Form1
             // 
@@ -73,8 +78,8 @@
 
         #endregion
         private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private ObjectsReferenceInformationControl.UserControl1 userControl11;
-        private ReferenceInfoControl.UserControl1 userControl12;
+        private ObjectsReferenceInformationControl.SpecificReferenceInformation userControl11;
+        private ObjectsReferenceInformationControl.SpecificReferenceInformation userControl12;
     }
 }
 

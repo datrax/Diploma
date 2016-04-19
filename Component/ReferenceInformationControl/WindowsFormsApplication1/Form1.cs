@@ -24,8 +24,12 @@ namespace WindowsFormsApplication1
         }
         public void setUser(object sender, EventArgs e)
         {
-            (sender as UserControl1).UserId = Convert.ToInt32(numericUpDown1.Value);
+            (sender as GeneralReferenceInformation).UserId = Convert.ToInt32(numericUpDown1.Value);
         }
 
+        private void specificReferenceInformation1_SetUser(object sender, EventArgs e)
+        {
+            (sender as GeneralReferenceInformation).UserId = Convert.ToInt32(numericUpDown1.Value);
+        }
     }
 }

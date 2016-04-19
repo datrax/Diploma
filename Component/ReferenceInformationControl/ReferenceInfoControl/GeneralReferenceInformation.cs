@@ -16,11 +16,11 @@ using BrightIdeasSoftware;
 
 namespace ReferenceInfoControl
 {
-    public partial class UserControl1 : UserControl
+    public partial class GeneralReferenceInformation : UserControl
     {
         public Services services;
         public SelectedItem selectedItem = new SelectedItem();
-        private int userid;
+        private int userid=-1;
         public EventHandler SetUser;
 
         public int UserId
@@ -36,12 +36,14 @@ namespace ReferenceInfoControl
             }
             set
             {
+                if (DesignMode)
+                    return;
                 userid = value;
                 label1.Text = services.GetAuthor(value);
             }
         }
 
-        public UserControl1()
+        public GeneralReferenceInformation()
         {
             if (DesignMode)
                 return;            
@@ -50,6 +52,24 @@ namespace ReferenceInfoControl
 
         }
 
+        public void LoadDocs(int mode,int id)
+        {
+            LoadTab(mode);
+            if (mode == 1)
+            {
+                LoadDocuments(id, new ObjectsDTO().GetType());
+            }
+            if (mode == 2)
+            {
+                LoadDocuments(id, new SectorsDTO().GetType());
+            }
+            if (mode == 3)
+            {
+                LoadDocuments(id, new WellsDTO().GetType());
+            }
+            tabControl1.SelectedIndex = 1;
+
+        }
         public void LoadTab(int number)
         {
             if (number == 1)
@@ -70,6 +90,7 @@ namespace ReferenceInfoControl
         {
             if (DesignMode)
                 return;
+            userid = -1;
 
             objectListView1.Font = new Font("Arial", 15.5F, GraphicsUnit.Pixel);
 
@@ -182,6 +203,15 @@ namespace ReferenceInfoControl
 
         private void objectListView1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            if (SetUser != null)
+            {
+                SetUser(this, null);
+            }
+            if (userid == -1)
+            {
+                MessageBox.Show("Не удалось получить данные от пользователя\n(Рекомендуеться использовать событие SetUserId для устаовки)");
+                return;
+            }
             selectedItem.SetItem(objectListView1.SelectedItem.RowObject);
             //     MessageBox.Show(selectedItem.Id.ToString(),selectedItem.item.GetType().Name);
             tabControl1.SelectedIndex = 1;
@@ -206,6 +236,11 @@ namespace ReferenceInfoControl
             objectListView2.Refresh();
         }
 
+        public void LoadDocuments(int id,Type type)
+        {
+            objectListView2.SetObjects(services.GetDocuments(id, type, UserId));
+            objectListView2.Refresh();
+        }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty((sender as TextBox).Text))
@@ -224,7 +259,7 @@ namespace ReferenceInfoControl
 
         private void objectListView2_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            MessageBox.Show(Services.GetItemAsString(objectListView2.SelectedObjects[0]));
+           // MessageBox.Show(Services.GetItemAsString(objectListView2.SelectedObjects[0]));
         }
 
         private void button2_Click_1(object sender, EventArgs e)
@@ -266,6 +301,7 @@ namespace ReferenceInfoControl
 
         private void button3_Click_1(object sender, EventArgs e)
         {
+            ClearOpened();
             for (int i = 0; i < objectListView2.SelectedItems.Count; i++)
             {
                 var doc = objectListView2.SelectedObjects[i] as DocumentsDTO;
@@ -379,7 +415,7 @@ namespace ReferenceInfoControl
                     button5.Enabled = true;
                 }
 
-                if (services.UserCanEditData(UserId) || services.IsAdmin(UserId) || doc.Author == UserId || doc.UsersCanEdit)
+                if (/*services.UserCanEditData(UserId) ||*/ services.IsAdmin(UserId) || doc.Author == UserId || doc.UsersCanEdit)
                 {
                     button7.Enabled = true;
 
@@ -495,6 +531,51 @@ namespace ReferenceInfoControl
             panel2.Enabled = false;
             button7.Enabled = true;
             LoadDocuments();
+        }
+
+        private void ClearOpened()
+        {
+            String[] allfiles = System.IO.Directory.GetFiles(Environment.CurrentDirectory + "/Opened/", "*.*",
+                System.IO.SearchOption.AllDirectories);
+            System.IO.Directory.GetDirectories(Environment.CurrentDirectory + "/Opened/");
+            foreach (var file in allfiles)
+            {
+                try
+                {
+                    if (CanReadFile(file)) File.Delete(file);
+                }
+                catch
+                {
+                }
+            }
+            var dirs = System.IO.Directory.GetDirectories(Environment.CurrentDirectory + "/Opened/");
+            foreach (var dir in dirs)
+            {
+                try
+                {
+                    System.IO.Directory.Delete(dir);
+                }
+                catch
+                {
+                }
+            }
+        }
+
+        bool CanReadFile(string fileName)
+        {
+            try
+            {
+                using (Stream stream = new FileStream(fileName, FileMode.Open))
+                {
+                    // File/Stream manipulating code here
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+         
         }
     }
 }

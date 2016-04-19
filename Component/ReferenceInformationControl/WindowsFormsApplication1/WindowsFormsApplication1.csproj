@@ -87,7 +87,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\oldUI\DAL\DAL.csproj">
@@ -98,9 +100,9 @@
       <Project>{18feda0c-d147-4286-b39a-01204808106a}</Project>
       <Name>ObjectListView2012</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ObjectsReferenceInformationControl\ObjectsReferenceInformationControl.csproj">
+    <ProjectReference Include="..\ObjectsReferenceInformationControl\SpecificReferenceInformationControl.csproj">
       <Project>{C2B70D1D-1A91-4C1F-A381-AF1C71C96DEB}</Project>
-      <Name>ObjectsReferenceInformationControl</Name>
+      <Name>SpecificReferenceInformationControl</Name>
     </ProjectReference>
     <ProjectReference Include="..\ReferenceInfoControl\ReferenceInfoControl.csproj">
       <Project>{5EA8117A-704C-4997-8ADE-0B9AB28F2D02}</Project>
