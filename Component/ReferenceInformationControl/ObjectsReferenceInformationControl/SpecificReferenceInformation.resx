@@ -117,10 +117,50 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="button1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="imageList1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="$this.TrayLargeIcon" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>False</value>
-  </metadata>
+  <data name="imageList1.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABO
+        CAAAAk1TRnQBSQFMAwEBAAEIAQABCAEAARABAAEQAQAE/wEhAQAI/wFCAU0BNgcAATYDAAEoAwABQAMA
+        ARADAAEBAQABIAYAARAVAAEBAS4BNQE6AUsBNwFeAX4BrAEtAWYBlgHGAS0BZwGWAccBLQFnAZYBxwEv
+        AWgBlgHHAS8BaAGWAccBLQFlAZYBxwEtAWUBlgHHAS0BZwGWAccBLwFoAZYBxwEtAWUBlgHHATIBXgGH
+        AbgBNgFDAUwBZAMKAQ3AAAEnASsBLQE5ATUBkAHFAeABJgGbAe4B/QEiAZcB8AH+ASMBmAHxAf4BIwGX
+        Ae8B/gEsAZoB7wH+ATEBnAHvAf4BIQGVAe4B/gEjAZYB7gH+AScBmAHvAf4BMAGcAe8B/gEhAZYB7gH+
+        ASMBlQHrAf0BMwGWAdQB6wE5AUcBTgFgwAABQQFrAYIBnQEuAaMB9AH+ASoBnQHxAf4BKgGfAfMB/wEq
+        AaAB8wH/ASoBoAHzAf8BKwGgAfQB/wErAaEB9AH/ASkBoAH0Af8BKgGhAfQB/wErAaIB9AH/ASoBowH0
+        Af8BKgGiAfQB/wErAaIB8gH+AS4BpQH0Af4BQgF7AZ0BtsAAAT4BdQGcAbUBKQGjAfUB/wErAaIB8wH+
+        ASoBpAH1Af8BKgGkAfUB/wEqAaQB9QH/ASsBpQH1Af8BKwGlAfUB/wEqAaYB9gH/ASoBpgH2Af8BKwGn
+        AfYB/wErAacB9gH/ASsBqAH2Af8BKwGoAfYB/wEsAagB9QH+ATwBhQGyAcjAAAE/AXoBngG3ASsBqQH3
+        Af8BLAGnAfQB/gErAakB9gH/ASsBqQH2Af8BKwGqAfcB/wErAaoB9wH/ASsBqwH3Af8BLAGrAfcB/wEs
+        AawB9wH/ASwBrAH3Af8BLAGtAfcB/wEsAa0B+AH/ASwBrgH3Af8BLgGuAfcB/gE+AYoBtAHJwAABPwF9
+        AaEBuAEtAa8B+QH/AS4BrQH2Af4BLQGvAfgB/wEtAbAB+AH/AS0BsAH5Af8BLQGxAfkB/wEtAbEB+QH/
+        AS4BsgH5Af8BLgGyAfkB/wEuAbMB+QH/AS4BtAH5Af8BLgG0AfoB/wEuAbQB+QH/ATABtAH5Af4BPwGO
+        AbcBysAAAUEBgQGhAbgBLgG1AfoB/wEwAbMB+AH+AS4BtQH6Af8BLgG2AfoB/wEvAbYB+gH/AS8BtwH6
+        Af8BLwG3AfoB/wEvAbgB+wH/AS8BuAH7Af8BLwG5AfsB/wEvAbkB+wH/AS8BugH7Af8BMAG6AfoB/wEx
+        AboB+gH+AT8BkQG3AcrAAAFCAXoBmQG2AS4BvAH9Af8BLwG5AfkB/gEwAbsB+wH/ATABuwH7Af8BLwG8
+        AfsB/wEvAbwB/AH/AS4BvQH8Af8BLwG9AfwB/wEvAb0B+wH/ATEBvgH7Af8BMQG+AfsB/wExAb4B+wH/
+        ATEBvwH7Af8BMQHAAfwB/gFBAYwBsQHIwAABOQFxAZoBtQFOAa4B3wH/AUwBvgHqAf4BNQHBAfsB/wE1
+        AcEB/AH/ATgBwwH8Af8BPAHFAf0B/wE+AcUB/QH/AT0BxgH+Af8BQwHFAfcB/wFIAcQB8QH/AUUBxAHy
+        Af8BQwHCAe8B/wFIAcMB7QH/AU4BrwHaAf4BPAF6AaYByMAAATUBcQGfAbUBfgGrAcwB/wGmAboBvwH+
+        AVABxwHzAf8BRgHMAf4B/wFHAc0B/gH/AUkBzgH+Af8BSgHOAf0B/wFDAdAC/wF2AcQB3gH/Aa0BvAHA
+        Af8BrAG/AcUB/wGfAbIBuAH/AakBtwG6Af8BiQGlAboB/gE+AXkBpgHIwAABOQFzAZ4BtQGQAboB2QH/
+        AskByAH+AYsBywHfAf8BeQHPAekB/wF5Ac8B6QH/AXkBzwHpAf8BegHPAegB/wF1AdAB6gH/AaUBxwHR
+        Af8ByQLGAf8BywHKAcsB/wO6Af8BxQLDAf8BnAG0AccB/gFEAX4BqAHIwAABQgF4AZ8BtQGcAcQB4AH/
+        AdUB0QHPAf4BygHEAcIB/wHLAcIBvwH/AcsBwgG/Af8BywHCAb8B/wHLAcIBvwH/AcsBwQG+Af8BygHG
+        AcUB/wPOAf8C1AHVAf8CwAHBAf8BzAHLAcoB/wGlAb0BzgH+AU4BhAGqAcjAAAFHAXoBnQGzAXsBvwHt
+        Af8B2wHdAd8B/gLgAeEB/wHgAuEB/wHeAuEB/wHfAuEB/wHfAuEB/wHfAuEB/wHfAeAB4QH/A+EB/wHX
+        AtgB/wLJAcoB/wLTAdIB/wGsAcUB1gH+AU0BhgGqAcfAAAFMAXUBjQGgAUwBswH1Af8BhQHHAe4B/gGg
+        AdIB7wH/AcsB3QHmAf8B7QHpAeYB/wHqAucB/wHqAecB5gH/AeoB5wHmAf8B6gHnAeYB/wHpAecB5QH/
+        AeEB3gHdAf8B3QHbAdoB/wHiAd4B3QH/AaAByAHgAf4BTwGFAaUBuMAAASwBMwE3AUABSgGtAekB8wFH
+        AbcB9wH/AUUBugH5Af8BYQHBAfIB/wG7AdwB6wH/AcwB4QHrAf8BywHiAesB/wHLAeMB6wH/AcsB4gHr
+        Af8BywHiAesB/wHKAeAB6gH/AcsB4AHrAf8BsgHWAeoB/gFiAbkB5wH2AUEBVQFgAWzEAAE7AUoBUgFd
+        AVABrgHdAeYBTAHBAfoB/wFLAcUB/AH/AUMBxQH8Af8BSAHKAf0B/wFJAc0B/gH/AUkB0AL/AUkBzwL/
+        AUgBzAH+Af8BRwHJAfwB/wFGAcUB+wH/AUUBtwHrAfIBSQFoAXcBgwMLAQ7AAAFCAU0BPgcAAT4DAAEo
+        AwABQAMAARADAAEBAQABAQUAAYAXAAP/eQABgAcACw==
+</value>
+  </data>
 </root>

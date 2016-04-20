@@ -14,7 +14,8 @@ namespace WindowsFormsApplication1
             InitializeComponent();
             for (int i = 0; i < 4; i++)
             {
-                var p = new SpecificReferenceInformation(1, i+1, "" + i);
+                var p = new SpecificReferenceInformation(1, i+1, "Объект " + (i+1));
+                p.Width = 200;
                 p.Location=new Point(15,i*30+5);
                 p.SetUser += setUser;
                 this.Controls.Add(p);

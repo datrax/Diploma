@@ -46,9 +46,9 @@
             // 
             this.specificReferenceInformation1.Id = null;
             this.specificReferenceInformation1.Location = new System.Drawing.Point(117, 232);
-            this.specificReferenceInformation1.MyText = "объекты";
+            this.specificReferenceInformation1.MyText = "Объекты";
             this.specificReferenceInformation1.Name = "specificReferenceInformation1";
-            this.specificReferenceInformation1.Size = new System.Drawing.Size(199, 33);
+            this.specificReferenceInformation1.Size = new System.Drawing.Size(111, 33);
             this.specificReferenceInformation1.TabIndex = 5;
             this.specificReferenceInformation1.SetUser += new System.EventHandler(this.setUser);
             // 

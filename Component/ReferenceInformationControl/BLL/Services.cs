@@ -306,12 +306,16 @@ namespace BLL
         }
         public bool IsAdmin(int id)
         {
+            if (id == -1)
+                return false;
             if (unitOfWork.GetRepository<performers>().GetById(id).performers_roles.Any(a => a.role_id == 0))
                 return true;
             return false;
         }
         public bool UserCanEditData(int id)
         {
+            if (id == -1)
+                return false;
             if (unitOfWork.GetRepository<performers>().GetById(id).performers_roles.Any(a => a.role_id == 1))
                 return true;
             return false;

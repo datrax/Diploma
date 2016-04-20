@@ -59,15 +59,5 @@ namespace ObjectsReferenceInformationControl.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap rsz_dokumenti {
-            get {
-                object obj = ResourceManager.GetObject("rsz_dokumenti", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
     }
 }

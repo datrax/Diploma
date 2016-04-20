@@ -18,7 +18,7 @@ namespace ObjectsReferenceInformationControl
         private string myText;
         private int _typeNumber;
         private int? id;
-        [Category("important"), Description("Id объекта"), DefaultValue("Объекты")]
+        [Category("important"), Description("Id объекта")]
         public int? Id
         {
             get
@@ -28,7 +28,7 @@ namespace ObjectsReferenceInformationControl
             set { id = value; }
         }
 
-        [Category("important"), Description("Текст"), DefaultValue("Объекты")]
+        [Category("important"), Description("Текст")]
         public string MyText
         {
             get { return myText; }
@@ -73,7 +73,7 @@ namespace ObjectsReferenceInformationControl
             if (DesignMode)
                 return;
             InitializeComponent();
-            button1.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("rsz_dokumenti");
+            button1.Image =  imageList1.Images[0];
             button1.BackgroundImageLayout = ImageLayout.Stretch;
 
         }
