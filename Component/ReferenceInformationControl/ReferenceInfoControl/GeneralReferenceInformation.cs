@@ -66,23 +66,38 @@ namespace ReferenceInfoControl
             LoadTab(mode);
             if (mode == 1)
             {
-                LoadDocuments(id, new ObjectsDTO().GetType());
-                selectedItem.SetItem(new ObjectsDTO());
-                selectedItem.Id = id;
+                var item = services.GetObjectById(id);
+                if (item == null)
+                {
+                    MessageBox.Show(@"Не удалось открыть документы данного объекта, возможно он не существует!");
+                    return;
+                }
+                LoadDocuments(id, item.GetType());
+                selectedItem.SetItem(item);
             }
             if (mode == 2)
             {
-                LoadDocuments(id, new SectorsDTO().GetType());
-                selectedItem.SetItem(new SectorsDTO());
-                selectedItem.Id = id;
+                var item = services.GetSectorById(id);
+                if (item == null)
+                {
+                    MessageBox.Show(@"Не удалось открыть документы данного объекта, возможно он не существует!");
+                    return;
+                }
+                LoadDocuments(id, item.GetType());
+                selectedItem.SetItem(item);
             }
             if (mode == 3)
             {
-                LoadDocuments(id, new WellsDTO().GetType());
-                selectedItem.SetItem(new WellsDTO());
-                selectedItem.Id = id;
+                var item = services.GetWellById(id);
+                if (item == null)
+                {
+                    MessageBox.Show(@"Не удалось открыть документы данного объекта, возможно он не существует!");
+                    return;
+                }
+                LoadDocuments(id, item.GetType());
+                selectedItem.SetItem(item);
             }
-          
+            label2.Text = services.GetItemsPath(selectedItem.item);
             tabControl1.SelectedIndex = 1;
 
         }
@@ -361,6 +376,7 @@ namespace ReferenceInfoControl
                     MessageBox.Show("Что-то пошло не так!\nИнформация: " + ex.Message);
                 }
             }
+            fileInfoPanel.Visible = false;
             LoadDocuments();
         }
 
@@ -612,29 +628,33 @@ namespace ReferenceInfoControl
 
         private void ClearOpened()
         {
-            String[] allfiles = System.IO.Directory.GetFiles(Environment.CurrentDirectory + "/Opened/", "*.*",
-                System.IO.SearchOption.AllDirectories);
-            foreach (var file in allfiles)
+            try
             {
-                try
+                String[] allfiles = System.IO.Directory.GetFiles(Environment.CurrentDirectory + "/Opened/", "*.*",
+                    System.IO.SearchOption.AllDirectories);
+                foreach (var file in allfiles)
                 {
-                    if (CanReadFile(file)) File.Delete(file);
+                    try
+                    {
+                        if (CanReadFile(file)) File.Delete(file);
+                    }
+                    catch
+                    {
+                    }
                 }
-                catch
+                var dirs = System.IO.Directory.GetDirectories(Environment.CurrentDirectory + "/Opened/");
+                foreach (var dir in dirs)
                 {
+                    try
+                    {
+                        System.IO.Directory.Delete(dir);
+                    }
+                    catch
+                    {
+                    }
                 }
             }
-            var dirs = System.IO.Directory.GetDirectories(Environment.CurrentDirectory + "/Opened/");
-            foreach (var dir in dirs)
-            {
-                try
-                {
-                    System.IO.Directory.Delete(dir);
-                }
-                catch
-                {
-                }
-            }
+            catch { }
         }
 
         bool CanReadFile(string fileName)

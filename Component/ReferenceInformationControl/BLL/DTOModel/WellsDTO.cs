@@ -12,9 +12,10 @@ namespace BLL.DTOModel
     {
         [OLVColumn("Id скважины", TextAlign = HorizontalAlignment.Center)]
         public int id { get; set; }
-
         [OLVColumn("Имя скважины", TextAlign = HorizontalAlignment.Center)]
         public string char_name { get; set; }
+        [OLVColumn("Id сектора", TextAlign = HorizontalAlignment.Center,IsVisible = false)]
+        public int? sector_id { get; set; }
         [OLVColumn("Имя сектора", TextAlign = HorizontalAlignment.Center)]
         public string sector_name { get; set; }
         [OLVColumn("Х", TextAlign = HorizontalAlignment.Center)]
@@ -38,7 +39,6 @@ namespace BLL.DTOModel
         [OLVColumn("Дата", TextAlign = HorizontalAlignment.Center)]
         public DateTime? date { get; set; }
 
-        public int? sector_id { get; set; }
         public override string ToString()
         {
             return String.Format("Id :{0}\n" +

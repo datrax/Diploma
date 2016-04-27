@@ -82,7 +82,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.Location = new System.Drawing.Point(6, 35);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(650, 20);
+            this.textBox1.Size = new System.Drawing.Size(705, 20);
             this.textBox1.TabIndex = 1;
             this.textBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.textBox1_Enter);
             this.textBox1.TextChanged += new System.EventHandler(this.FilterTextBoxTextChanged);
@@ -104,7 +104,7 @@
             this.generalListView.MultiSelect = false;
             this.generalListView.Name = "generalListView";
             this.generalListView.ShowGroups = false;
-            this.generalListView.Size = new System.Drawing.Size(730, 376);
+            this.generalListView.Size = new System.Drawing.Size(786, 475);
             this.generalListView.TabIndex = 0;
             this.generalListView.UseAlternatingBackColors = true;
             this.generalListView.UseCompatibleStateImageBehavior = false;
@@ -118,7 +118,7 @@
             // 
             this.objectsButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.objectsButton.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.objectsButton.Location = new System.Drawing.Point(263, 6);
+            this.objectsButton.Location = new System.Drawing.Point(262, 6);
             this.objectsButton.Name = "objectsButton";
             this.objectsButton.Size = new System.Drawing.Size(75, 23);
             this.objectsButton.TabIndex = 2;
@@ -130,7 +130,7 @@
             // 
             this.sectorButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.sectorButton.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.sectorButton.Location = new System.Drawing.Point(356, 6);
+            this.sectorButton.Location = new System.Drawing.Point(378, 6);
             this.sectorButton.Name = "sectorButton";
             this.sectorButton.Size = new System.Drawing.Size(75, 23);
             this.sectorButton.TabIndex = 3;
@@ -142,7 +142,7 @@
             // 
             this.wellsButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.wellsButton.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.wellsButton.Location = new System.Drawing.Point(451, 6);
+            this.wellsButton.Location = new System.Drawing.Point(486, 6);
             this.wellsButton.Name = "wellsButton";
             this.wellsButton.Size = new System.Drawing.Size(75, 23);
             this.wellsButton.TabIndex = 4;
@@ -153,7 +153,7 @@
             // button4
             // 
             this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button4.Location = new System.Drawing.Point(661, 35);
+            this.button4.Location = new System.Drawing.Point(717, 35);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 20);
             this.button4.TabIndex = 5;
@@ -171,7 +171,7 @@
             this.tabControl1.Location = new System.Drawing.Point(3, -22);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(808, 553);
+            this.tabControl1.Size = new System.Drawing.Size(806, 575);
             this.tabControl1.TabIndex = 6;
             this.tabControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tabControl1_KeyDown);
             // 
@@ -186,7 +186,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(800, 527);
+            this.tabPage1.Size = new System.Drawing.Size(798, 549);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -519,7 +519,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tabControl1);
             this.Name = "GeneralReferenceInformation";
-            this.Size = new System.Drawing.Size(814, 534);
+            this.Size = new System.Drawing.Size(812, 556);
             this.Load += new System.EventHandler(this.UserControl1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.generalListView)).EndInit();
             this.tabControl1.ResumeLayout(false);

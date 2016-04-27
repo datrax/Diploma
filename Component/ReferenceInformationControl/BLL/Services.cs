@@ -38,6 +38,25 @@ namespace BLL
             var mapper = config.CreateMapper();
             return mapper.Map<List<WellsDTO>>(unitOfWork.GetRepository<wells>().GetAll().ToList());
         }
+
+        public ObjectsDTO GetObjectById(int id)
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<objects, ObjectsDTO>());
+            var mapper = config.CreateMapper();
+            return mapper.Map<ObjectsDTO>(unitOfWork.GetRepository<objects>().GetById(id));
+        }
+        public SectorsDTO GetSectorById(int id)
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<sectors, SectorsDTO>().ForMember(a => a.objectName, o => o.MapFrom(s => s.objects.name)));
+            var mapper = config.CreateMapper();
+            return mapper.Map<SectorsDTO>(unitOfWork.GetRepository<sectors>().GetById(id));
+        }
+        public WellsDTO GetWellById(int id)
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<wells, WellsDTO>().ForMember(a => a.sector_name, o => o.MapFrom(s => s.sectors.name)));
+            var mapper = config.CreateMapper();
+            return mapper.Map<WellsDTO>(unitOfWork.GetRepository<wells>().GetById(id));
+        }
         public  string GetItemsPath(object rowObject)
         {
         
