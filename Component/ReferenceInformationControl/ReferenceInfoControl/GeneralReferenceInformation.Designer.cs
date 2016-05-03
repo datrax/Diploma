@@ -52,12 +52,12 @@
             this.privateRadioButton = new System.Windows.Forms.RadioButton();
             this.readonlyRadioButton = new System.Windows.Forms.RadioButton();
             this.editButton = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
+            this.cloneButton = new System.Windows.Forms.Button();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.deleteButton = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.button3 = new System.Windows.Forms.Button();
+            this.openButton = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.fileListView = new BrightIdeasSoftware.ObjectListView();
             this.NameColumn = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
@@ -198,12 +198,12 @@
             this.tabPage2.Controls.Add(this.editPanel);
             this.tabPage2.Controls.Add(this.fileInfoPanel);
             this.tabPage2.Controls.Add(this.editButton);
-            this.tabPage2.Controls.Add(this.button6);
+            this.tabPage2.Controls.Add(this.cloneButton);
             this.tabPage2.Controls.Add(this.checkBox2);
             this.tabPage2.Controls.Add(this.textBox2);
             this.tabPage2.Controls.Add(this.deleteButton);
             this.tabPage2.Controls.Add(this.checkBox1);
-            this.tabPage2.Controls.Add(this.button3);
+            this.tabPage2.Controls.Add(this.openButton);
             this.tabPage2.Controls.Add(this.button2);
             this.tabPage2.Controls.Add(this.fileListView);
             this.tabPage2.Controls.Add(this.button1);
@@ -347,16 +347,16 @@
             this.editButton.UseVisualStyleBackColor = true;
             this.editButton.Click += new System.EventHandler(this.EditButtonClick);
             // 
-            // button6
+            // cloneButton
             // 
-            this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button6.Location = new System.Drawing.Point(697, 129);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(97, 23);
-            this.button6.TabIndex = 8;
-            this.button6.Text = "Клонировать";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.CloneButton_Click);
+            this.cloneButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cloneButton.Location = new System.Drawing.Point(697, 129);
+            this.cloneButton.Name = "cloneButton";
+            this.cloneButton.Size = new System.Drawing.Size(97, 23);
+            this.cloneButton.TabIndex = 8;
+            this.cloneButton.Text = "Клонировать";
+            this.cloneButton.UseVisualStyleBackColor = true;
+            this.cloneButton.Click += new System.EventHandler(this.CloneButton_Click);
             // 
             // checkBox2
             // 
@@ -402,16 +402,16 @@
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.GroupsTextBoxCheckedChanged);
             // 
-            // button3
+            // openButton
             // 
-            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.Location = new System.Drawing.Point(697, 56);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(97, 23);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "Открыть";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.OpenButtonClick);
+            this.openButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.openButton.Location = new System.Drawing.Point(697, 56);
+            this.openButton.Name = "openButton";
+            this.openButton.Size = new System.Drawing.Size(97, 23);
+            this.openButton.TabIndex = 3;
+            this.openButton.Text = "Открыть";
+            this.openButton.UseVisualStyleBackColor = true;
+            this.openButton.Click += new System.EventHandler(this.OpenButtonClick);
             // 
             // button2
             // 
@@ -552,7 +552,7 @@
         private BrightIdeasSoftware.OLVColumn AuthorColumn;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button openButton;
         private System.Windows.Forms.CheckBox checkBox1;
         private BrightIdeasSoftware.OLVColumn VersionColumn;
         private BrightIdeasSoftware.OLVColumn DateColumn;
@@ -560,7 +560,7 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.Button editButton;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button cloneButton;
         private System.Windows.Forms.RadioButton privateRadioButton;
         private System.Windows.Forms.RadioButton readonlyRadioButton;
         private System.Windows.Forms.RadioButton chengedRadioButton;

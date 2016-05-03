@@ -251,6 +251,7 @@ namespace ReferenceInfoControl
         {
             fileListView.SetObjects(services.GetDocuments(selectedItem.Id, selectedItem.item.GetType(), UserId));
             fileListView.Refresh();
+            FileListView_SelectionChanged(null, null);
         }
 
         public void LoadDocuments(int id, Type type)
@@ -454,10 +455,16 @@ namespace ReferenceInfoControl
             {
                 fileInfoPanel.Visible = false;
                 editPanel.Enabled = false;
+                deleteButton.Enabled = false;
+                editButton.Enabled = false;
+                cloneButton.Enabled = false;
+                openButton.Enabled = false;
             }
             else
                 if (fileListView.SelectedObjects.Count == 1)
             {
+                cloneButton.Enabled = true;
+                openButton.Enabled = true;
                 var doc = fileListView.SelectedObjects[0] as DocumentsDTO;
                 if (doc.Author != UserId && !services.IsAdmin(UserId))
                 {
@@ -508,7 +515,9 @@ namespace ReferenceInfoControl
             }
             else
             {
-             //   deleteButton.Enabled = false;
+                cloneButton.Enabled = true;
+                openButton.Enabled = true;
+                deleteButton.Enabled = true;
                 editPanel.Enabled = false;
                 fileInfoPanel.Visible = false;
             }
@@ -567,6 +576,7 @@ namespace ReferenceInfoControl
                 File.WriteAllBytes(Environment.CurrentDirectory + "/Edited/" + path.ToString() + "/" + doc.Name, data);
                 Process.Start(Environment.CurrentDirectory + "/Edited/" + path.ToString() + "/" + doc.Name);
                 editButton.Enabled = false;
+                editPanel.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -619,7 +629,7 @@ namespace ReferenceInfoControl
                 catch
                 {
                 }
-                editPanel.Visible = false;
+                editPanel.Enabled = false;
                 editButton.Enabled = true;
                 LoadDocuments();
             }
