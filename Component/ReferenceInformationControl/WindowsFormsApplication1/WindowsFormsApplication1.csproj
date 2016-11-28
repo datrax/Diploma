@@ -92,10 +92,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\oldUI\DAL\DAL.csproj">
-      <Project>{80bd5e89-be32-4779-b229-10a79890a129}</Project>
-      <Name>DAL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ObjectListView\ObjectListView\ObjectListView2012.csproj">
       <Project>{18feda0c-d147-4286-b39a-01204808106a}</Project>
       <Name>ObjectListView2012</Name>

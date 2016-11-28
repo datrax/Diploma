@@ -62,8 +62,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\oldUI\DAL\DAL.csproj">
-      <Project>{80bd5e89-be32-4779-b229-10a79890a129}</Project>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{80BD5E89-BE32-4779-B229-10A79890A129}</Project>
       <Name>DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\ObjectListView\ObjectListView\ObjectListView2012.csproj">
