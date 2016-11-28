@@ -606,7 +606,7 @@ namespace ReferenceInfoControl
             {
                 MessageBox.Show("Что-то пошло не так!\nИнформация: " + ex.Message);
                 fileInfoPanel.Enabled = false;
-                editPanel.Visible = false;
+                editPanel.Enabled = false;
                 deleteButton.Enabled = false;
                 LoadDocuments();
             }
