@@ -27,10 +27,7 @@ namespace ReferenceInfoControl
         {
             get
             {
-                if (SetUser != null)
-                {
-                    SetUser(this, null);
-                }
+                SetUser?.Invoke(this, null);
                 return userid;
 
             }
@@ -40,6 +37,7 @@ namespace ReferenceInfoControl
                     return;
                 userid = value;
                 label1.Text = services.GetAuthor(value);
+                SetUser = null;
             }
         }
 
@@ -211,16 +209,21 @@ namespace ReferenceInfoControl
         {
             this.generalListView.ModelFilter = null;
             var text = textBox1.Text;
-            var searchWords = text.Split(';');
             var filters = new List<IModelFilter>();
-            searchWords = searchWords.Reverse().ToArray();
-            foreach (var word in searchWords)
+            TextMatchFilter highlightingFilter = null;
+            var words = text.Split(';');
+            highlightingFilter = TextMatchFilter.Contains(generalListView, words);
+            foreach (var word in words)
             {
-                filters.Add(TextMatchFilter.Contains(this.generalListView, word));
+                var filter = TextMatchFilter.Contains(generalListView, word);
+                filters.Add(filter);
             }
-            this.generalListView.ModelFilter = new CompositeAllFilter(filters);
 
-            generalListView.Refresh();
+            var compositeFilter = new CompositeAllFilter(filters);
+
+            generalListView.ModelFilter = highlightingFilter;
+            generalListView.AdditionalFilter = compositeFilter;
+            generalListView.DefaultRenderer = new HighlightTextRenderer(highlightingFilter);
         }
 
         private void objectListView1_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -284,22 +287,22 @@ namespace ReferenceInfoControl
             try
             {
                 using (var selectFileDialog = new OpenFileDialog()
-            {
-                Multiselect = true,
-            })
-            {
-                if (selectFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    for (int i = 0; i < selectFileDialog.FileNames.Length; i++)
+                    Multiselect = true,
+                })
+                {
+                    if (selectFileDialog.ShowDialog() == DialogResult.OK)
                     {
-                        var fileName = selectFileDialog.FileNames[i];
-                        var shortName = selectFileDialog.SafeFileNames[i];
-                        var bytes = File.ReadAllBytes(fileName);
-                        services.AddFile(shortName, UserId, "1", bytes, selectedItem.Id, true, true, selectedItem.item.GetType());
+                        for (int i = 0; i < selectFileDialog.FileNames.Length; i++)
+                        {
+                            var fileName = selectFileDialog.FileNames[i];
+                            var shortName = selectFileDialog.SafeFileNames[i];
+                            var bytes = File.ReadAllBytes(fileName);
+                            services.AddFile(shortName, UserId, "1", bytes, selectedItem.Id, true, true, selectedItem.item.GetType());
+                        }
+                        LoadDocuments();
                     }
-                    LoadDocuments();
                 }
-            }
             }
             catch (Exception ex)
             {
@@ -330,11 +333,11 @@ namespace ReferenceInfoControl
                 try
                 {
                     var doc = fileListView.SelectedObjects[i] as DocumentsDTO;
-                var guid = Guid.NewGuid();
-                System.IO.Directory.CreateDirectory(Environment.CurrentDirectory + "/Opened/" + guid.ToString());
-                var data = services.GetDocumentByid(doc.id, selectedItem.item.GetType());
-                File.WriteAllBytes(Environment.CurrentDirectory + "/Opened/" + guid.ToString() + "/" + doc.Name, data);
-                Process.Start(Environment.CurrentDirectory + "/Opened/" + guid.ToString() + "/" + doc.Name);
+                    var guid = Guid.NewGuid();
+                    System.IO.Directory.CreateDirectory(Environment.CurrentDirectory + "/Opened/" + guid.ToString());
+                    var data = services.GetDocumentByid(doc.id, selectedItem.item.GetType());
+                    File.WriteAllBytes(Environment.CurrentDirectory + "/Opened/" + guid.ToString() + "/" + doc.Name, data);
+                    Process.Start(Environment.CurrentDirectory + "/Opened/" + guid.ToString() + "/" + doc.Name);
                 }
                 catch (Exception ex)
                 {
@@ -362,11 +365,11 @@ namespace ReferenceInfoControl
                 try
                 {
                     var doc = (fileListView.SelectedObjects[i] as DocumentsDTO);
-                    if(!services.IsAdmin(userid)&&doc.Author!=userid)continue;
+                    if (!services.IsAdmin(userid) && doc.Author != userid) continue;
                     services.DeleteFile(doc.id, selectedItem.item.GetType());
 
-                    var path = selectedItem.item.GetType().Name + "/" + doc.id ;
-                    if (File.Exists(Environment.CurrentDirectory + "/Edited/"+path + "/" + doc.Name))
+                    var path = selectedItem.item.GetType().Name + "/" + doc.id;
+                    if (File.Exists(Environment.CurrentDirectory + "/Edited/" + path + "/" + doc.Name))
                     {
                         File.Delete(Environment.CurrentDirectory + "/Edited/" + path.ToString() + "/" + doc.Name);
                         System.IO.Directory.Delete(Environment.CurrentDirectory + "/Edited/" + path.ToString());
@@ -402,15 +405,21 @@ namespace ReferenceInfoControl
         {
             this.fileListView.ModelFilter = null;
             var text = textBox2.Text;
-            var searchWords = text.Split(';');
             var filters = new List<IModelFilter>();
-            searchWords = searchWords.Reverse().ToArray();
-            foreach (var word in searchWords)
+            TextMatchFilter highlightingFilter = null;
+            var words = text.Split(';');
+            highlightingFilter = TextMatchFilter.Contains(fileListView, words);
+            foreach (var word in words)
             {
-                filters.Add(TextMatchFilter.Contains(this.fileListView, word));
+                var filter = TextMatchFilter.Contains(fileListView, word);
+                filters.Add(filter);
             }
-            this.fileListView.ModelFilter = new CompositeAllFilter(filters);
-            fileListView.Refresh();
+
+            var compositeFilter = new CompositeAllFilter(filters);
+
+            fileListView.ModelFilter = highlightingFilter;
+            fileListView.AdditionalFilter = compositeFilter;
+            fileListView.DefaultRenderer = new HighlightTextRenderer(highlightingFilter);
         }
 
         private void TileCheckedChanged(object sender, EventArgs e)
@@ -437,7 +446,7 @@ namespace ReferenceInfoControl
                     var data = services.GetDocumentByid(doc.id, selectedItem.item.GetType());
                     services.AddFile(doc.Name, UserId, doc.Version + "_Cloned", data, selectedItem.Id, true, true,
                         selectedItem.item.GetType());
-  
+
                 }
                 catch (Exception ex)
                 {
@@ -506,7 +515,7 @@ namespace ReferenceInfoControl
                 {
                     privateRadioButton.Checked = true;
                 }
-                if(services.IsAdmin(UserId)&& doc.BeingEdited && doc.UserThatEdits != null && (doc.UserThatEdits.Value != UserId))
+                if (services.IsAdmin(UserId) && doc.BeingEdited && doc.UserThatEdits != null && (doc.UserThatEdits.Value != UserId))
                 {
                     editPanel.Enabled = true;
                     editButton.Enabled = false;
@@ -548,13 +557,13 @@ namespace ReferenceInfoControl
                 }
                 services.EditDocument(doc, selectedItem.item.GetType());
                 fileInfoPanel.Visible = false;
-                LoadDocuments();            
-              }
+                LoadDocuments();
+            }
             catch (Exception ex)
             {
                 MessageBox.Show("Что-то пошло не так!\nИнформация: " + ex.Message);
             }
-}
+        }
 
         private void EditButtonClick(object sender, EventArgs e)
         {
@@ -596,7 +605,7 @@ namespace ReferenceInfoControl
                 var data =
                     File.ReadAllBytes(Environment.CurrentDirectory + "/Edited/" + path.ToString() + "/" + doc.Name);
                 File.Delete(Environment.CurrentDirectory + "/Edited/" + path.ToString() + "/" + doc.Name);
-                System.IO.Directory.Delete(Environment.CurrentDirectory + "/Edited/" + path.ToString());           
+                System.IO.Directory.Delete(Environment.CurrentDirectory + "/Edited/" + path.ToString());
                 services.SetNewDocData(doc, selectedItem.item.GetType(), data);
                 editPanel.Enabled = false;
                 editButton.Enabled = true;

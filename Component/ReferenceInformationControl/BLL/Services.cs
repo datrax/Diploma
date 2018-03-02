@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using AutoMapper;
 using BLL.DTOModel;
 using DAL;
@@ -15,47 +11,37 @@ namespace BLL
     public class Services
     {
         private IUnitOfWork unitOfWork;
+        private IMapper autoMapper;
         public Services()
         {
+            autoMapper = AutomapperConfig.InitializeAutomapper();
             unitOfWork = new UnitOfWork<ModelContext>();
         }
         public IEnumerable<ObjectsDTO> GetObjects()
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<objects, ObjectsDTO>());
-            var mapper = config.CreateMapper();
-            return mapper.Map<List<ObjectsDTO>>(unitOfWork.GetRepository<objects>().GetAll().ToList());
+            return autoMapper.Map<List<ObjectsDTO>>(unitOfWork.GetRepository<objects>().GetAll().ToList());
         }
         public IEnumerable<SectorsDTO> GetSectors()
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<sectors, SectorsDTO>().ForMember(a => a.objectName, o => o.MapFrom(s => s.objects.name)));
-            var mapper = config.CreateMapper();
-            return mapper.Map<List<SectorsDTO>>(unitOfWork.GetRepository<sectors>().GetAll().ToList());
+            return autoMapper.Map<List<SectorsDTO>>(unitOfWork.GetRepository<sectors>().GetAll().ToList());
         }
 
         public IEnumerable<WellsDTO> GetWells()
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<wells, WellsDTO>().ForMember(a => a.sector_name, o => o.MapFrom(s => s.sectors.name)));
-            var mapper = config.CreateMapper();
-            return mapper.Map<List<WellsDTO>>(unitOfWork.GetRepository<wells>().GetAll().ToList());
+            return autoMapper.Map<List<WellsDTO>>(unitOfWork.GetRepository<wells>().GetAll().ToList());
         }
 
         public ObjectsDTO GetObjectById(int id)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<objects, ObjectsDTO>());
-            var mapper = config.CreateMapper();
-            return mapper.Map<ObjectsDTO>(unitOfWork.GetRepository<objects>().GetById(id));
+            return autoMapper.Map<ObjectsDTO>(unitOfWork.GetRepository<objects>().GetById(id));
         }
         public SectorsDTO GetSectorById(int id)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<sectors, SectorsDTO>().ForMember(a => a.objectName, o => o.MapFrom(s => s.objects.name)));
-            var mapper = config.CreateMapper();
-            return mapper.Map<SectorsDTO>(unitOfWork.GetRepository<sectors>().GetById(id));
+            return autoMapper.Map<SectorsDTO>(unitOfWork.GetRepository<sectors>().GetById(id));
         }
         public WellsDTO GetWellById(int id)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<wells, WellsDTO>().ForMember(a => a.sector_name, o => o.MapFrom(s => s.sectors.name)));
-            var mapper = config.CreateMapper();
-            return mapper.Map<WellsDTO>(unitOfWork.GetRepository<wells>().GetById(id));
+            return autoMapper.Map<WellsDTO>(unitOfWork.GetRepository<wells>().GetById(id));
         }
         public  string GetItemsPath(object rowObject)
         {
@@ -64,7 +50,8 @@ namespace BLL
             {
                 string ans = "";
                 var t= (rowObject as WellsDTO);
-                ans+=unitOfWork.GetRepository<sectors>().GetById(t.sector_id.Value).objects.name;
+                if (t.sector_id != null)
+                    ans += unitOfWork.GetRepository<sectors>().GetById(t.sector_id.Value).objects.name;
                 ans += "/"+t.sector_name+"/"+t.char_name;
                 return ans;
             }
