@@ -18,6 +18,7 @@ namespace DAL
             _disposed = false;
         }
 
+        public RedisRepository RedisRepository { get; set; } = new RedisRepository();
         public IRepository<T> GetRepository<T>() where T : class
         {
             if (_repositories.Keys.Contains(typeof(T)))

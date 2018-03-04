@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BLL.DTOModel;
+using BLL.Contract.DTOModel;
 using DAL.EF;
 
 namespace BLL

@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="WcfRemoteService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:53114/WcfRemoteService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:53114/WcfRemoteService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:53114/WcfRemoteService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/BLL.Contract.DTOModel" />
+      <xsd:import schemaLocation="http://localhost:53114/WcfRemoteService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IWcfRemoteService_GetObjects_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetObjects" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_GetObjects_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetObjectsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_GetSectors_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSectors" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_GetSectors_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSectorsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_GetWells_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetWells" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_GetWells_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetWellsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_GetObjectById_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetObjectById" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_GetObjectById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetObjectByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_GetSectorById_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSectorById" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_GetSectorById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSectorByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_GetWellById_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetWellById" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_GetWellById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetWellByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_GetItemsPath_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetItemsPath" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_GetItemsPath_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetItemsPathResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_GetDocumentByid_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDocumentByid" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_GetDocumentByid_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDocumentByidResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_GetDocuments_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDocuments" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_GetDocuments_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDocumentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_GetHints_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetHints" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_GetHints_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetHintsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_AddFile_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddFile" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_AddFile_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_EditDocument_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditDocument" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_EditDocument_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditDocumentResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_GetAuthor_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAuthor" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_GetAuthor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAuthorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_DeleteFile_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteFile" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_DeleteFile_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_SetNewDocData_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetNewDocData" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_SetNewDocData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetNewDocDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_IsAdmin_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsAdmin" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_IsAdmin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsAdminResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_UserCanEditData_InputMessage">
+    <wsdl:part name="parameters" element="tns:UserCanEditData" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_UserCanEditData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UserCanEditDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_FoundDocs_InputMessage">
+    <wsdl:part name="parameters" element="tns:FoundDocs" />
+  </wsdl:message>
+  <wsdl:message name="IWcfRemoteService_FoundDocs_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FoundDocsResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IWcfRemoteService">
+    <wsdl:operation name="GetObjects">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWcfRemoteService/GetObjects" message="tns:IWcfRemoteService_GetObjects_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWcfRemoteService/GetObjectsResponse" message="tns:IWcfRemoteService_GetObjects_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSectors">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWcfRemoteService/GetSectors" message="tns:IWcfRemoteService_GetSectors_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWcfRemoteService/GetSectorsResponse" message="tns:IWcfRemoteService_GetSectors_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWells">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWcfRemoteService/GetWells" message="tns:IWcfRemoteService_GetWells_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWcfRemoteService/GetWellsResponse" message="tns:IWcfRemoteService_GetWells_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetObjectById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWcfRemoteService/GetObjectById" message="tns:IWcfRemoteService_GetObjectById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWcfRemoteService/GetObjectByIdResponse" message="tns:IWcfRemoteService_GetObjectById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSectorById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWcfRemoteService/GetSectorById" message="tns:IWcfRemoteService_GetSectorById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWcfRemoteService/GetSectorByIdResponse" message="tns:IWcfRemoteService_GetSectorById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWellById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWcfRemoteService/GetWellById" message="tns:IWcfRemoteService_GetWellById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWcfRemoteService/GetWellByIdResponse" message="tns:IWcfRemoteService_GetWellById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetItemsPath">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWcfRemoteService/GetItemsPath" message="tns:IWcfRemoteService_GetItemsPath_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWcfRemoteService/GetItemsPathResponse" message="tns:IWcfRemoteService_GetItemsPath_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentByid">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWcfRemoteService/GetDocumentByid" message="tns:IWcfRemoteService_GetDocumentByid_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWcfRemoteService/GetDocumentByidResponse" message="tns:IWcfRemoteService_GetDocumentByid_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDocuments">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWcfRemoteService/GetDocuments" message="tns:IWcfRemoteService_GetDocuments_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWcfRemoteService/GetDocumentsResponse" message="tns:IWcfRemoteService_GetDocuments_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHints">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWcfRemoteService/GetHints" message="tns:IWcfRemoteService_GetHints_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWcfRemoteService/GetHintsResponse" message="tns:IWcfRemoteService_GetHints_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddFile">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWcfRemoteService/AddFile" message="tns:IWcfRemoteService_AddFile_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWcfRemoteService/AddFileResponse" message="tns:IWcfRemoteService_AddFile_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditDocument">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWcfRemoteService/EditDocument" message="tns:IWcfRemoteService_EditDocument_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWcfRemoteService/EditDocumentResponse" message="tns:IWcfRemoteService_EditDocument_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAuthor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWcfRemoteService/GetAuthor" message="tns:IWcfRemoteService_GetAuthor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWcfRemoteService/GetAuthorResponse" message="tns:IWcfRemoteService_GetAuthor_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFile">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWcfRemoteService/DeleteFile" message="tns:IWcfRemoteService_DeleteFile_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWcfRemoteService/DeleteFileResponse" message="tns:IWcfRemoteService_DeleteFile_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetNewDocData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWcfRemoteService/SetNewDocData" message="tns:IWcfRemoteService_SetNewDocData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWcfRemoteService/SetNewDocDataResponse" message="tns:IWcfRemoteService_SetNewDocData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsAdmin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWcfRemoteService/IsAdmin" message="tns:IWcfRemoteService_IsAdmin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWcfRemoteService/IsAdminResponse" message="tns:IWcfRemoteService_IsAdmin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UserCanEditData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWcfRemoteService/UserCanEditData" message="tns:IWcfRemoteService_UserCanEditData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWcfRemoteService/UserCanEditDataResponse" message="tns:IWcfRemoteService_UserCanEditData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FoundDocs">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWcfRemoteService/FoundDocs" message="tns:IWcfRemoteService_FoundDocs_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWcfRemoteService/FoundDocsResponse" message="tns:IWcfRemoteService_FoundDocs_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IWcfRemoteService" type="tns:IWcfRemoteService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetObjects">
+      <soap:operation soapAction="http://tempuri.org/IWcfRemoteService/GetObjects" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSectors">
+      <soap:operation soapAction="http://tempuri.org/IWcfRemoteService/GetSectors" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWells">
+      <soap:operation soapAction="http://tempuri.org/IWcfRemoteService/GetWells" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetObjectById">
+      <soap:operation soapAction="http://tempuri.org/IWcfRemoteService/GetObjectById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSectorById">
+      <soap:operation soapAction="http://tempuri.org/IWcfRemoteService/GetSectorById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWellById">
+      <soap:operation soapAction="http://tempuri.org/IWcfRemoteService/GetWellById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetItemsPath">
+      <soap:operation soapAction="http://tempuri.org/IWcfRemoteService/GetItemsPath" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentByid">
+      <soap:operation soapAction="http://tempuri.org/IWcfRemoteService/GetDocumentByid" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocuments">
+      <soap:operation soapAction="http://tempuri.org/IWcfRemoteService/GetDocuments" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHints">
+      <soap:operation soapAction="http://tempuri.org/IWcfRemoteService/GetHints" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddFile">
+      <soap:operation soapAction="http://tempuri.org/IWcfRemoteService/AddFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditDocument">
+      <soap:operation soapAction="http://tempuri.org/IWcfRemoteService/EditDocument" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAuthor">
+      <soap:operation soapAction="http://tempuri.org/IWcfRemoteService/GetAuthor" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFile">
+      <soap:operation soapAction="http://tempuri.org/IWcfRemoteService/DeleteFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetNewDocData">
+      <soap:operation soapAction="http://tempuri.org/IWcfRemoteService/SetNewDocData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsAdmin">
+      <soap:operation soapAction="http://tempuri.org/IWcfRemoteService/IsAdmin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserCanEditData">
+      <soap:operation soapAction="http://tempuri.org/IWcfRemoteService/UserCanEditData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FoundDocs">
+      <soap:operation soapAction="http://tempuri.org/IWcfRemoteService/FoundDocs" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WcfRemoteService">
+    <wsdl:port name="BasicHttpBinding_IWcfRemoteService" binding="tns:BasicHttpBinding_IWcfRemoteService">
+      <soap:address location="http://localhost:53114/WcfRemoteService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

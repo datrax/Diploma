@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/BLL.Contract.DTOModel" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/BLL.Contract.DTOModel" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ArrayOfObjectsDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ObjectsDTO" nillable="true" type="tns:ObjectsDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfObjectsDTO" nillable="true" type="tns:ArrayOfObjectsDTO" />
+  <xs:complexType name="ObjectsDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:int" />
+      <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ObjectsDTO" nillable="true" type="tns:ObjectsDTO" />
+  <xs:complexType name="ArrayOfSectorsDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SectorsDTO" nillable="true" type="tns:SectorsDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSectorsDTO" nillable="true" type="tns:ArrayOfSectorsDTO" />
+  <xs:complexType name="SectorsDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:int" />
+      <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="objectName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="object_id" nillable="true" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SectorsDTO" nillable="true" type="tns:SectorsDTO" />
+  <xs:complexType name="ArrayOfWellsDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WellsDTO" nillable="true" type="tns:WellsDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWellsDTO" nillable="true" type="tns:ArrayOfWellsDTO" />
+  <xs:complexType name="WellsDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="char_name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="coordX" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="coordY" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="date" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="depth" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="filter_down" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="filter_up" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="horizon" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="id" type="xs:int" />
+      <xs:element minOccurs="0" name="index_altitude" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="level_altitude" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="note" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="sector_id" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="sector_name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WellsDTO" nillable="true" type="tns:WellsDTO" />
+  <xs:complexType name="ArrayOfDocumentsDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DocumentsDTO" nillable="true" type="tns:DocumentsDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDocumentsDTO" nillable="true" type="tns:ArrayOfDocumentsDTO" />
+  <xs:complexType name="DocumentsDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Author" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="AuthorName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BeingEdited" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsPrivate" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LastChangeUser" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="LastChangeUserName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ParentId" type="xs:int" />
+      <xs:element minOccurs="0" name="UserThatEdits" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="UsersCanEdit" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Version" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="dateTime" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DocumentsDTO" nillable="true" type="tns:DocumentsDTO" />
+  <xs:complexType name="ArrayOfFoundDocumentsDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FoundDocumentsDto" nillable="true" type="tns:FoundDocumentsDto" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFoundDocumentsDto" nillable="true" type="tns:ArrayOfFoundDocumentsDto" />
+  <xs:complexType name="FoundDocumentsDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AuthorName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastChangeUserName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ParentId" type="xs:int" />
+      <xs:element minOccurs="0" name="Path" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Version" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="dateTime" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FoundDocumentsDto" nillable="true" type="tns:FoundDocumentsDto" />
+</xs:schema>

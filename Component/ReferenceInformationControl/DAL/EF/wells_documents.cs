@@ -15,8 +15,6 @@ namespace DAL.EF
         [Required]
         public string Name { get; set; }
 
-        [Required]
-        public byte[] Data { get; set; }
 
         public int? Author { get; set; }
 

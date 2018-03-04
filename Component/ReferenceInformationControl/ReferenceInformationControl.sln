@@ -1,19 +1,26 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectListView2012", "ObjectListView\ObjectListView\ObjectListView2012.csproj", "{18FEDA0C-D147-4286-B39A-01204808106A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApplication1", "WindowsFormsApplication1\WindowsFormsApplication1.csproj", "{2E1D793C-104C-4FB5-BF88-6073D7DC59A2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferenceInfoControl", "ReferenceInfoControl\ReferenceInfoControl.csproj", "{5EA8117A-704C-4997-8ADE-0B9AB28F2D02}"
+	ProjectSection(ProjectDependencies) = postProject
+		{150F7B02-4510-4E4F-8DFB-6D0AD78DFC1E} = {150F7B02-4510-4E4F-8DFB-6D0AD78DFC1E}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{7E64D15D-6B7F-4C46-8175-EDEC1D8F3192}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecificReferenceInformationControl", "ObjectsReferenceInformationControl\SpecificReferenceInformationControl.csproj", "{C2B70D1D-1A91-4C1F-A381-AF1C71C96DEB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{80BD5E89-BE32-4779-B229-10A79890A129}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFServer", "WcfService1\WCFServer.csproj", "{150F7B02-4510-4E4F-8DFB-6D0AD78DFC1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL.Contract", "BLL.Contract\BLL.Contract.csproj", "{5B4E5229-D5E4-4B07-8534-AABE1B2EB8E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,8 +52,19 @@ Global
 		{80BD5E89-BE32-4779-B229-10A79890A129}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80BD5E89-BE32-4779-B229-10A79890A129}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80BD5E89-BE32-4779-B229-10A79890A129}.Release|Any CPU.Build.0 = Release|Any CPU
+		{150F7B02-4510-4E4F-8DFB-6D0AD78DFC1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{150F7B02-4510-4E4F-8DFB-6D0AD78DFC1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{150F7B02-4510-4E4F-8DFB-6D0AD78DFC1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{150F7B02-4510-4E4F-8DFB-6D0AD78DFC1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B4E5229-D5E4-4B07-8534-AABE1B2EB8E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B4E5229-D5E4-4B07-8534-AABE1B2EB8E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B4E5229-D5E4-4B07-8534-AABE1B2EB8E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B4E5229-D5E4-4B07-8534-AABE1B2EB8E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D077051B-F7AA-4BD0-8E55-C8E41E7633C2}
 	EndGlobalSection
 EndGlobal

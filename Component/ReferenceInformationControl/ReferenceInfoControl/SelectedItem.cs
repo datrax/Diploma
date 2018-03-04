@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using BLL.DTOModel;
+﻿using BLL.Contract.DTOModel;
+using ReferenceInfoControl.ServiceReference;
 
 namespace ReferenceInfoControl
 {
@@ -32,6 +27,21 @@ namespace ReferenceInfoControl
                 var i = item as ObjectsDTO;
                 Id = i.id;
             }
+        }
+        public static string GetItemAsString(object rowObject)
+        {
+
+            if (rowObject is WellsDTO)
+                return (rowObject as WellsDTO).ToString();
+
+            if (rowObject is SectorsDTO)
+                return (rowObject as SectorsDTO).ToString();
+
+            if (rowObject is ObjectsDTO)
+                return (rowObject as ObjectsDTO).ToString();
+            if (rowObject is DocumentsDTO)
+                return (rowObject as DocumentsDTO).dateTime.ToString();
+            return "";
         }
     }
 }

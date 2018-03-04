@@ -6,23 +6,29 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BLL;
-using BLL.DTOModel;
+using BLL.Contract.DTOModel;
 using BrightIdeasSoftware;
+using ReferenceInfoControl.ServiceReference;
+using DocumentsDTO = BLL.Contract.DTOModel.DocumentsDTO;
+using ObjectsDTO = BLL.Contract.DTOModel.ObjectsDTO;
+using SectorsDTO = BLL.Contract.DTOModel.SectorsDTO;
+using WellsDTO = BLL.Contract.DTOModel.WellsDTO;
 
 
 namespace ReferenceInfoControl
 {
     public partial class GeneralReferenceInformation : UserControl
     {
-        public Services services;
-        public SelectedItem selectedItem = new SelectedItem();
+        public IWcfRemoteService services;
+        public SelectedItem selectedParentItem = new SelectedItem();
         private int userid = -1;
         public EventHandler SetUser;
-
+        private readonly SynchronizationContext synchronizationContext;
         public int UserId
         {
             get
@@ -46,8 +52,8 @@ namespace ReferenceInfoControl
             if (DesignMode)
                 return;
             InitializeComponent();
-            services = new Services();
-
+            services = new WcfRemoteServiceClient("BasicHttpBinding_IWcfRemoteService");
+            synchronizationContext = SynchronizationContext.Current;
         }
 
         public void LoadDocs(int mode, int id)
@@ -71,7 +77,8 @@ namespace ReferenceInfoControl
                     return;
                 }
                 LoadDocuments(id, item.GetType());
-                selectedItem.SetItem(item);
+                selectedParentItem.SetItem(item);
+                
             }
             if (mode == 2)
             {
@@ -82,7 +89,7 @@ namespace ReferenceInfoControl
                     return;
                 }
                 LoadDocuments(id, item.GetType());
-                selectedItem.SetItem(item);
+                selectedParentItem.SetItem(item);
             }
             if (mode == 3)
             {
@@ -93,11 +100,11 @@ namespace ReferenceInfoControl
                     return;
                 }
                 LoadDocuments(id, item.GetType());
-                selectedItem.SetItem(item);
+                selectedParentItem.SetItem(item);
             }
-            label2.Text = services.GetItemsPath(selectedItem.item);
+            label2.Text = services.GetItemsPath(selectedParentItem.Id, selectedParentItem.item.GetType().Name);
             tabControl1.SelectedIndex = 1;
-
+          
         }
         public void LoadTab(int number)
         {
@@ -155,11 +162,23 @@ namespace ReferenceInfoControl
                 if (ob.Name.EndsWith(".avi") || ob.Name.EndsWith(".mp4") || ob.Name.EndsWith(".flac")) return 6;
                 return 0;
             };
-            fileListView.AllColumns[0].FillsFreeSpace = true;
-            fileListView.AllColumns[1].FillsFreeSpace = true;
-            fileListView.AllColumns[2].FillsFreeSpace = true;
-            fileListView.AllColumns[3].FillsFreeSpace = true;
-            fileListView.AllColumns[4].FillsFreeSpace = true;
+            NameColumn2.ImageGetter += delegate (object rowObject)
+            {
+                var ob = rowObject as FoundDocumentsDto;
+                if (ob == null) return 0;
+                if (ob.Name.EndsWith(".doc")) return 2;
+                if (ob.Name.EndsWith(".docx")) return 3;
+                if (ob.Name.EndsWith(".txt")) return 1;
+                if (ob.Name.EndsWith(".pdf")) return 5;
+                if (ob.Name.EndsWith(".jpeg") || ob.Name.EndsWith(".gif") || ob.Name.EndsWith(".png") ||
+                    ob.Name.EndsWith(".jpg"))
+                    return 4;
+                if (ob.Name.EndsWith(".mp3") || ob.Name.EndsWith(".wav") || ob.Name.EndsWith(".flac")) return 7;
+                if (ob.Name.EndsWith(".avi") || ob.Name.EndsWith(".mp4") || ob.Name.EndsWith(".flac")) return 6;
+                return 0;
+            };
+            fileListView.AllColumns.ForEach(a=>a.FillsFreeSpace=true);
+            searchFilesListView.AllColumns.ForEach(a => a.FillsFreeSpace = true);
             LoadTab(1);
         }
 
@@ -167,7 +186,7 @@ namespace ReferenceInfoControl
         {
             if (generalListView.SelectedItem != null &&
                 generalListView.HotRowIndex == generalListView.SelectedItem.Index)
-                e.Text = Services.GetItemAsString(generalListView.SelectedObject);
+                e.Text = SelectedItem.GetItemAsString(generalListView.SelectedObject);
             fileListView.CellToolTip.IsBalloon = true;
             fileListView.CellToolTip.Font = new Font("Tahoma", 14);
         }
@@ -176,7 +195,7 @@ namespace ReferenceInfoControl
         {
             if (fileListView.SelectedObjects.Count > 1)
                 return;
-            e.Text = Services.GetItemAsString(e.Item.RowObject);
+            e.Text = SelectedItem.GetItemAsString(e.Item.RowObject);
             generalListView.CellToolTip.IsBalloon = true;
             generalListView.CellToolTip.Font = new Font("Tahoma", 14);
         }
@@ -237,11 +256,12 @@ namespace ReferenceInfoControl
                 MessageBox.Show("Не удалось получить данные от пользователя\n(Рекомендуеться использовать событие SetUserId для устаовки)");
                 return;
             }
-            selectedItem.SetItem(generalListView.SelectedItem.RowObject);
+            selectedParentItem.SetItem(generalListView.SelectedItem.RowObject);
             tabControl1.SelectedIndex = 1;
             LoadDocuments();
             fileListView.Refresh();
-            label2.Text = services.GetItemsPath(generalListView.SelectedObject);
+            label2.Text = services.GetItemsPath(selectedParentItem.Id, selectedParentItem.item.GetType().Name);
+            
         }
 
         private void objectListView1_KeyDown(object sender, KeyEventArgs e)
@@ -252,14 +272,14 @@ namespace ReferenceInfoControl
 
         public void LoadDocuments()
         {
-            fileListView.SetObjects(services.GetDocuments(selectedItem.Id, selectedItem.item.GetType(), UserId));
+            fileListView.SetObjects(services.GetDocuments(selectedParentItem.Id, selectedParentItem.item.GetType().Name, UserId).OrderBy(a=>a.dateTime));
             fileListView.Refresh();
             FileListView_SelectionChanged(null, null);
         }
 
-        public void LoadDocuments(int id, Type type)
+        public void LoadDocuments(int parentId, Type type)
         {
-            fileListView.SetObjects(services.GetDocuments(id, type, UserId));
+            fileListView.SetObjects(services.GetDocuments(parentId, type.Name, UserId));
             fileListView.Refresh();
         }
         private void FilterTextBoxTextChanged(object sender, EventArgs e)
@@ -296,9 +316,10 @@ namespace ReferenceInfoControl
                         for (int i = 0; i < selectFileDialog.FileNames.Length; i++)
                         {
                             var fileName = selectFileDialog.FileNames[i];
+
                             var shortName = selectFileDialog.SafeFileNames[i];
                             var bytes = File.ReadAllBytes(fileName);
-                            services.AddFile(shortName, UserId, "1", bytes, selectedItem.Id, true, true, selectedItem.item.GetType());
+                            services.AddFile(shortName, UserId, "1", bytes, selectedParentItem.Id, true, true, selectedParentItem.item.GetType().Name);
                         }
                         LoadDocuments();
                     }
@@ -335,7 +356,7 @@ namespace ReferenceInfoControl
                     var doc = fileListView.SelectedObjects[i] as DocumentsDTO;
                     var guid = Guid.NewGuid();
                     System.IO.Directory.CreateDirectory(Environment.CurrentDirectory + "/Opened/" + guid.ToString());
-                    var data = services.GetDocumentByid(doc.id, selectedItem.item.GetType());
+                    var data = services.GetDocumentByid(doc.id, selectedParentItem.item.GetType().Name);
                     File.WriteAllBytes(Environment.CurrentDirectory + "/Opened/" + guid.ToString() + "/" + doc.Name, data);
                     Process.Start(Environment.CurrentDirectory + "/Opened/" + guid.ToString() + "/" + doc.Name);
                 }
@@ -366,9 +387,9 @@ namespace ReferenceInfoControl
                 {
                     var doc = (fileListView.SelectedObjects[i] as DocumentsDTO);
                     if (!services.IsAdmin(userid) && doc.Author != userid) continue;
-                    services.DeleteFile(doc.id, selectedItem.item.GetType());
+                    services.DeleteFile(doc.id, selectedParentItem.item.GetType().Name);
 
-                    var path = selectedItem.item.GetType().Name + "/" + doc.id;
+                    var path = selectedParentItem.item.GetType().Name + "/" + doc.id;
                     if (File.Exists(Environment.CurrentDirectory + "/Edited/" + path + "/" + doc.Name))
                     {
                         File.Delete(Environment.CurrentDirectory + "/Edited/" + path.ToString() + "/" + doc.Name);
@@ -443,9 +464,9 @@ namespace ReferenceInfoControl
                 try
                 {
                     var doc = fileListView.SelectedObjects[i] as DocumentsDTO;
-                    var data = services.GetDocumentByid(doc.id, selectedItem.item.GetType());
-                    services.AddFile(doc.Name, UserId, doc.Version + "_Cloned", data, selectedItem.Id, true, true,
-                        selectedItem.item.GetType());
+                    var data = services.GetDocumentByid(doc.id, selectedParentItem.item.GetType().Name);
+                    services.AddFile(doc.Name, UserId, doc.Version + "_Cloned", data, selectedParentItem.Id, true, true,
+                        selectedParentItem.item.GetType().Name);
 
                 }
                 catch (Exception ex)
@@ -555,7 +576,7 @@ namespace ReferenceInfoControl
                     doc.IsPrivate = true;
                     doc.UsersCanEdit = true;
                 }
-                services.EditDocument(doc, selectedItem.item.GetType());
+                services.EditDocument(doc, selectedParentItem.item.GetType().Name);
                 fileInfoPanel.Visible = false;
                 LoadDocuments();
             }
@@ -578,10 +599,10 @@ namespace ReferenceInfoControl
                 }
                 doc.BeingEdited = true;
                 doc.UserThatEdits = UserId;
-                services.EditDocument(doc, selectedItem.item.GetType());
-                var path = selectedItem.item.GetType().Name + "/" + doc.id + "/";
+                services.EditDocument(doc, selectedParentItem.item.GetType().Name);
+                var path = selectedParentItem.item.GetType().Name + "/" + doc.id + "/";
                 System.IO.Directory.CreateDirectory(Environment.CurrentDirectory + "/Edited/" + path.ToString());
-                var data = services.GetDocumentByid(doc.id, selectedItem.item.GetType());
+                var data = services.GetDocumentByid(doc.id, selectedParentItem.item.GetType().Name);
                 File.WriteAllBytes(Environment.CurrentDirectory + "/Edited/" + path.ToString() + "/" + doc.Name, data);
                 Process.Start(Environment.CurrentDirectory + "/Edited/" + path.ToString() + "/" + doc.Name);
                 editButton.Enabled = false;
@@ -601,12 +622,12 @@ namespace ReferenceInfoControl
                 var doc = (fileListView.SelectedObjects[0] as DocumentsDTO);
                 doc.UserThatEdits = null;
                 doc.LastChangeUser = UserId;
-                var path = selectedItem.item.GetType().Name + "/" + doc.id + "/";
+                var path = selectedParentItem.item.GetType().Name + "/" + doc.id + "/";
                 var data =
                     File.ReadAllBytes(Environment.CurrentDirectory + "/Edited/" + path.ToString() + "/" + doc.Name);
                 File.Delete(Environment.CurrentDirectory + "/Edited/" + path.ToString() + "/" + doc.Name);
                 System.IO.Directory.Delete(Environment.CurrentDirectory + "/Edited/" + path.ToString());
-                services.SetNewDocData(doc, selectedItem.item.GetType(), data);
+                services.SetNewDocData(doc, selectedParentItem.item.GetType().Name, data);
                 editPanel.Enabled = false;
                 editButton.Enabled = true;
                 LoadDocuments();
@@ -628,8 +649,8 @@ namespace ReferenceInfoControl
                 var doc = fileListView.SelectedObjects[0] as DocumentsDTO;
                 doc.BeingEdited = false;
                 doc.UserThatEdits = null;
-                services.EditDocument(doc, selectedItem.item.GetType());
-                var path = selectedItem.item.GetType().Name + "/" + doc.id + "/";
+                services.EditDocument(doc, selectedParentItem.item.GetType().Name);
+                var path = selectedParentItem.item.GetType().Name + "/" + doc.id + "/";
                 try
                 {
                     File.Delete(Environment.CurrentDirectory + "/Edited/" + path.ToString() + "/" + doc.Name);
@@ -711,6 +732,86 @@ namespace ReferenceInfoControl
         private void textBox1_Leave(object sender, EventArgs e)
         {
             tt.Dispose();
+        }
+
+        private void ExtendedSearch_Click(object sender, EventArgs e)
+        {
+            var files = services.FoundDocs(userid, ExtendedSearchField.Text).OrderBy(a=>a.dateTime);
+            searchFilesListView.SetObjects(files);
+            listBox1.Hide();
+            searchFilesListView.Refresh();
+        }
+
+        private async void ExtendedSearchField_TextChanged(object sender, EventArgs e)
+        {
+            var tb = (sender as TextBox);
+            if (tb.Text.Length > 0 && ExtendedSearchField.Text != listBox1.SelectedItem?.ToString())
+            {
+                await Task.Run(() =>
+                {
+                    var hints = services.GetHints(userid, tb.Text).ToArray();
+
+                    synchronizationContext.Post(new SendOrPostCallback(o =>
+                    {
+                        listBox1.Items.Clear();
+                        listBox1.Items.AddRange((string[])o);
+                        listBox1.Show();
+                    }), hints);
+
+
+                });
+
+            }
+            else
+            {
+                listBox1.Hide();
+            }
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedItem is string)
+            {
+                ExtendedSearchField.Text = listBox1.SelectedItem.ToString();
+            }
+            listBox1.Hide();
+        }
+
+        private void searchFilesListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                var doc = searchFilesListView.SelectedObjects[0] as FoundDocumentsDto;
+                int mode = 1;
+                switch (doc.Type)
+                {
+                    case "ObjectsDTO":
+                        mode = 1;
+                        break;
+                    case "SectorsDTO":
+                        mode = 2;
+                        break;
+                    case "WellsDTO":
+                        mode = 3;
+                        break;
+                }
+                LoadDocs(mode, doc.ParentId);
+
+                var index = fileListView.Objects.Cast<DocumentsDTO>().ToList().FindIndex(a => a.id == doc.id);
+                fileListView.SelectedIndex = index;
+                fileListView.FocusedItem = fileListView.SelectedItems[0];
+            }
+            catch { }
+        }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            tabControl1.SelectTab(0);
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectTab(2);
         }
     }
 }
